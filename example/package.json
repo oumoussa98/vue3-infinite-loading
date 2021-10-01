@@ -1,0 +1,16 @@
+{
+  "name": "vu3-infinite-loading-example",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "v3-infinite-loading": "^1.0.0",
+    "vue": "^3.2.13"
+  },
+  "devDependencies": {
+    "vite": "^2.5.10"
+  }
+}

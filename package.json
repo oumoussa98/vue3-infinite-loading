@@ -1,0 +1,41 @@
+{
+  "name": "v3-infinite-loading",
+  "version": "1.0.0",
+  "description": "Infinite scroller component for vuejs-3",
+  "homepage": "https://vue3-infinite-loading.netlify.app/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oumoussa98/vue3-infinite-loading.git"
+  },
+  "main": "lib/v3-infinite-loading.es.js",
+  "browser": "lib/v3-infinite-loading.umd.js",
+  "module": "lib/v3-infinite-loading.es.js",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.9.0",
+    "@vue/compiler-sfc": "^3.2.19",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-vue": "^7.18.0",
+    "prettier": "2.4.1",
+    "vite": "^2.5.10"
+  },
+  "scripts": {
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "format": "prettier .  --write",
+    "build:lib": "vite build --mode lib"
+  },
+  "keywords": [
+    "vue3",
+    "vue3 infinite loading",
+    "vue component",
+    "infinite loader",
+    "infinite scroller",
+    "infinite loading"
+  ],
+  "author": "abdelouahed oumoussa",
+  "license": "MIT"
+}
