@@ -89,6 +89,9 @@ const load = async $state => {
 
 <template>
   <div class="settings">
+    <a target="_blank" href="https://github.com/oumoussa98/vue3-infinite-loading/tree/main/example">
+      <img src="./assets/github.svg" alt="github icon" />
+    </a>
     <span class="props">
       <Checkbox :checked="top" :disabled="!target" label="top" @click="topToggler">Top</Checkbox>
       <Checkbox :checked="target" label="target" @click="targetToggler">Target</Checkbox>
@@ -151,6 +154,7 @@ body {
   text-align: center;
 }
 .settings {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -164,6 +168,11 @@ body {
   background: #333536;
   border-radius: 10px;
   padding: 10px;
+}
+.settings a {
+  position: absolute;
+  top: 4px;
+  right: 5px;
 }
 .props {
   display: flex;
