@@ -20,7 +20,7 @@ register globally:
 
 ```JavaScript
 import InfiniteLoading from "v3-infinite-loading";
-import "v3-infinite-loading/lib/style.css"; //required if you're going to use the built in spinner
+import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
 
 const app = createApp(App);
 
@@ -34,7 +34,7 @@ usage in SFC with script setup:
 ```html
 <script setup>
   import InfiniteLoading from "v3-infinite-loading";
-  import "v3-infinite-loading/lib/style.css"; //if you're going to use the built in spinner
+  import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
 </script>
 
 <template>
