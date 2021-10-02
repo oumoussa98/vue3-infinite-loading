@@ -1,6 +1,6 @@
 ## Intro
 
-An infinite scroll component compatible with Vue.js 3 and vite, to help you implement an infinite scroll list more easily.
+An infinite scroll component compatible with vue.js 3 and vite, to help you implement an infinite scroll list more easily.
 
 ## Features
 
@@ -44,9 +44,9 @@ usage in SFC with script setup:
 
 ## Usage & Guide
 
-Documentation available on [Vue3-infinite-loading netlify](https://vue3-infinite-loading.netlify.com/)
+Documentation available on [v3-infinite-loading Netlify](https://vue3-infinite-loading.netlify.com/)
 
-Check out live demo [Vue3-infinite-loading-demo netlify](https://vue3-infinite-loading-demo.netlify.com/)
+Check out live demo [v3-infinite-loading-demo Netlify](https://vue3-infinite-loading-demo.netlify.com/)
 
 ## Changelog
 
