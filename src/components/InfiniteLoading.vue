@@ -66,29 +66,16 @@ onUnmounted(() => {
 
 <template>
   <div id="vue3-infinite-loading">
-    <slot
-      v-if="state == 'loading'"
-      name="spinner"
-    >
+    <slot v-if="state == 'loading'" name="spinner">
       <Spinner />
     </slot>
-    <slot
-      v-if="state == 'complete'"
-      name="complete"
-    >
+    <slot v-if="state == 'complete'" name="complete">
       <span> {{ slots?.complete || "No more results!" }} </span>
     </slot>
-    <slot
-      v-if="state == 'error'"
-      name="error"
-      :retry="params.emitInfiniteEvent"
-    >
+    <slot v-if="state == 'error'" name="error" :retry="params.emitInfiniteEvent">
       <span class="state-error">
         <span>{{ slots?.error || "Oops something went wrong!" }}</span>
-        <button
-          class="retry"
-          @click="params.emitInfiniteEvent"
-        >retry</button>
+        <button class="retry" @click="params.emitInfiniteEvent">retry</button>
       </span>
     </slot>
   </div>
