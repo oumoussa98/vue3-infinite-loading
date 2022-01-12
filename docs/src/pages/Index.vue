@@ -55,7 +55,7 @@
       <div class="flex flex-wrap justify-center -mx-4">
         <div class="flex flex-col items-center w-full px-4 mb-8 text-center md:w-1/3">
           <h3 class="font-bold tracking-wide uppercase text-ui-primary">Light and simple</h3>
-          <p class="text-lg">Lignt weight, Simple and easy to use api and a built in spinner</p>
+          <p class="text-lg">Light weight, Simple and easy to use api and a built in spinner</p>
         </div>
 
         <div class="flex flex-col items-center w-full px-4 mb-8 text-center md:w-1/3">
