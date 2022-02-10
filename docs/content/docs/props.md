@@ -18,7 +18,7 @@ next: "/docs/events/"
 ### distance
 
 - **Type**: `Number`
-- **Default**: `0`
+- **Default**: `100`
 - **Details**:
   The `infinite` event will be fired if the scroll distance is less than this value.
 
