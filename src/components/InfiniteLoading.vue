@@ -12,7 +12,7 @@ import {
 const props = defineProps({
   top: { type: Boolean, required: false },
   target: { type: [String, Boolean], required: false },
-  distance: { type: Number, required: false, default: 0 },
+  distance: { type: Number, required: false, default: 100 },
   identifier: { required: false },
   firstLoad: { type: Boolean, required: false, default: true },
   slots: { type: Object, required: false },
