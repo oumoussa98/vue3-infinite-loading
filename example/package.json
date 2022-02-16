@@ -7,7 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "v3-infinite-loading": "^1.0.0",
+    "v3-infinite-loading": "^1.0.5",
     "vue": "^3.2.13"
   },
   "devDependencies": {
