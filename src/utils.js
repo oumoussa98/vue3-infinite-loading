@@ -13,16 +13,18 @@ const stateHandler = state => ({
   },
 });
 
-function infiniteEventEmitter(emit, stateHandler) {
+const infiniteEventEmitter = (emit, stateHandler) => {
   return () => {
     stateHandler.loading();
     emit("infinite", stateHandler);
   };
 }
 
-function isVisible(el, view) {
-  var rect = el.getBoundingClientRect();
-  return Math.abs(rect.top) * 2 <= view.clientHeight || !view.clientHeight;
+const isVisible = (el, view) => {
+  const rect = el.getBoundingClientRect();
+  const viewRect = view.getBoundingClientRect();
+  const rectTop = rect.top - viewRect.top;
+  return (rectTop <= view.clientHeight || !view.clientHeight);
 }
 
 // generate event handler
