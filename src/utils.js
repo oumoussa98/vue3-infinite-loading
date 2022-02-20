@@ -39,7 +39,6 @@ const getEventHandler = (el, { state, distance, emitInfiniteEvent, top }) => {
   };
 };
 // start scroll event
-let eventHandler;
 const startScrollEvent = params => {
   if (params.target && !document.querySelector(params.target))
     return console.error("Vue3 infinite loading: target prop should be a valid css selector");
@@ -47,14 +46,15 @@ const startScrollEvent = params => {
   const el = document.querySelector(params.target) || document.documentElement;
   const target = document.querySelector(params.target) || window;
 
-  const infiniteLoading = document.getElementById("vue3-infinite-loading");
+  const infiniteLoading = document.getElementById(params.id);
   if (isVisible(infiniteLoading, el) && params.firstLoad) params.emitInfiniteEvent();
 
-  eventHandler = getEventHandler(el, params);
+  const eventHandler = getEventHandler(el, params);
   target.addEventListener("scroll", eventHandler);
+  return eventHandler;
 };
 // remove scroll event
-const removeScrollEvent = params => {
+const removeScrollEvent = (params, eventHandler) => {
   const target = document.querySelector(params.target) || window;
   target.removeEventListener("scroll", eventHandler);
 };

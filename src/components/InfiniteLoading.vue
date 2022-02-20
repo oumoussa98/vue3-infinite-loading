@@ -10,6 +10,7 @@ import {
 } from "../utils.js";
 
 const props = defineProps({
+  id: { type: String, required: false, default: 'vue3-infinite-loading' },
   top: { type: Boolean, required: false },
   target: { type: [String, Boolean], required: false },
   distance: { type: Number, required: false, default: 0 },
@@ -25,6 +26,7 @@ const { top, target, distance, firstLoad, slots } = props;
 const { identifier } = toRefs(props);
 
 const params = {
+  id,
   state,
   target,
   distance,
@@ -51,8 +53,9 @@ const identifierWatcher = () =>
     startScrollEvent(params);
   });
 
+let eventHandler
 onMounted(() => {
-  startScrollEvent(params);
+  eventHandler = startScrollEvent(params);
   let el = document.querySelector(target) || document.documentElement;
   let prevHeight = el.scrollHeight;
   stateWatcher(el, prevHeight);
@@ -60,12 +63,12 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  removeScrollEvent(params);
+  removeScrollEvent(params, eventHandler);
 });
 </script>
 
 <template>
-  <div id="vue3-infinite-loading">
+  <div :id="id">
     <slot v-if="state == 'loading'" name="spinner">
       <Spinner />
     </slot>
