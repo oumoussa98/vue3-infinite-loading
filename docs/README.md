@@ -1,15 +1,24 @@
-<p align="center">
-    <img src="https://github.com/mrcrmn/docc/raw/master/static/logo.jpg" alt="Docc Logo" width="450">
-</p>
+# vuejs.org
 
-A starter documentation theme for [Gridsome](https://gridsome.org/).
+This is the WIP branch of the brand new vuejs.org. **The content is under heavy updates and re-organization so please refrain from submitting PRs to this branch until we have removed this notice.**
 
-## Installation
+## Contributing
 
-If you have the Gridsome CLI installed, simply run:
+This site is built with [VitePress](https://github.com/vuejs/vitepress) and depends on [@vue/theme](https://github.com/vuejs/vue-theme). Site content is written in Markdown format located in `src`. For simple edits, you can directly edit the file on GitHub and generate a Pull Request.
 
-`gridsome create your-project https://github.com/mrcrmn/docc`
+For local development, [pnpm](https://pnpm.io/) is preferred as package manager:
 
-## Documentation
+```bash
+pnpm i
+pnpm run dev
+```
 
-Documentation can be found [here](https://docc-theme.netlify.com/).
+## Working on the content
+
+- See VitePress docs on supported [Markdown Extensions](https://vitepress.vuejs.org/guide/markdown.html) and the ability to [use Vue syntax inside markdown](https://vitepress.vuejs.org/guide/using-vue.html).
+
+- See the [Writing Guide](https://github.com/vuejs/docs/blob/main/.github/contributing/writing-guide.md) for our rules and recommendations on writing and maintaining documentation content.
+
+## Working on the theme
+
+If changes need to made for the theme, check out the [instructions for developing the theme alongside the docs](https://github.com/vuejs/vue-theme#developing-with-real-content).

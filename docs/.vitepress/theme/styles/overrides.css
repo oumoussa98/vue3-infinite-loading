@@ -1,0 +1,18 @@
+a.VPNavBarTitle {
+	width: 40px;
+	background-image: url(/logo.svg);
+	background-position: center;
+	background-size: 30px;
+	background-repeat: no-repeat;
+}
+a.VPNavBarTitle span {
+	display: none;
+}
+
+a.VPNavBarTitle svg {
+	display: none;
+}
+
+.edit-link {
+	display: none;
+}
