@@ -47,7 +47,7 @@ const startScrollEvent = params => {
   const el = document.querySelector(params.target) || document.documentElement;
   const target = document.querySelector(params.target) || window;
 
-  const infiniteLoading = document.getElementById("vue3-infinite-loading");
+  const infiniteLoading = params.vue3InfiniteLoading.value;
   if (isVisible(infiniteLoading, el) && params.firstLoad) params.emitInfiniteEvent();
 
   eventHandler = getEventHandler(el, params);

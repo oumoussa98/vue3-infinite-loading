@@ -12,7 +12,7 @@ import {
 const props = defineProps({
   top: { type: Boolean, required: false },
   target: { type: [String, Boolean], required: false },
-  distance: { type: Number, required: false, default: 0 },
+  distance: { type: Number, required: false, default: 100 },
   identifier: { required: false },
   firstLoad: { type: Boolean, required: false, default: true },
   slots: { type: Object, required: false },
@@ -20,11 +20,13 @@ const props = defineProps({
 
 const emit = defineEmits(["infinite"]);
 
+const vue3InfiniteLoading = ref(null);
 const state = ref("");
 const { top, target, distance, firstLoad, slots } = props;
 const { identifier } = toRefs(props);
 
 const params = {
+  vue3InfiniteLoading,
   state,
   target,
   distance,
@@ -65,7 +67,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div id="vue3-infinite-loading">
+  <div ref="vue3InfiniteLoading">
     <slot v-if="state == 'loading'" name="spinner">
       <Spinner />
     </slot>
