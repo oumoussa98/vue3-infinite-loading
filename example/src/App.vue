@@ -8,7 +8,7 @@ let page = 0;
 let mount = ref(true);
 let resetData = ref(false);
 let target = ref(".bottom-results");
-let distance = ref(0);
+let distance = ref(100);
 let top = ref(false);
 let comments = ref([]);
 let mountname = ref("Unmount");
@@ -21,7 +21,7 @@ const refresh = () => {
 
 const reset = () => {
   target.value = ".bottom-results";
-  distance.value = 0;
+  distance.value = 100;
   top.value = false;
   mount.value = true;
   mountname.value = "Unmount";
@@ -160,8 +160,8 @@ body {
   align-items: center;
   justify-content: center;
   gap: 20px;
-  height: 20vh;
-  max-height: 100px;
+  height: 15vh;
+  max-height: 200px;
   width: 500px;
   max-width: 90vw;
   margin: 0 auto;
@@ -228,7 +228,8 @@ body {
   flex-direction: column;
   gap: 5px;
   font-weight: 300;
-  width: 300px;
+  width: 90%;
+  max-width: 300px;
   padding: 10px;
   text-align: center;
   margin: 0 auto 10px auto;
