@@ -7,8 +7,8 @@
   - **example**:
 
   ```html
-  <template #error="{ retry }">
-    <button @click="retry">Retry</button>
+  <template #spinner>
+    <span>loading...</span>
   </template>
   ```
 
