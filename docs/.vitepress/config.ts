@@ -85,7 +85,7 @@ export default defineConfigWithTheme<Config>({
     // },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/' },
+      { icon: 'github', link: 'https://github.com/oumoussa98/vue3-infinite-loading' },
     ],
 
     footer: {
