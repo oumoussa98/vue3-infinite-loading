@@ -66,7 +66,7 @@ Now let's add a template to display the results
     <div>{{ comment.email }}</div>
     <div>{{ comment.id }}</div>
   </div>
-  <InfiniteLoading :comments="comments" @infinite="load" />
+  <InfiniteLoading @infinite="load" />
 </template>
 ```
 
