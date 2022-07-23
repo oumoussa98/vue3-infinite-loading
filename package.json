@@ -7,9 +7,9 @@
     "type": "git",
     "url": "https://github.com/oumoussa98/vue3-infinite-loading.git"
   },
-  "main": "lib/v3-infinite-loading.es.js",
+  "main": "lib/v3-infinite-loading.mjs",
   "browser": "lib/v3-infinite-loading.umd.js",
-  "module": "lib/v3-infinite-loading.es.js",
+  "module": "lib/v3-infinite-loading.mjs",
   "files": [
     "lib"
   ],
