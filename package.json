@@ -13,7 +13,6 @@
   "files": [
     "lib"
   ],
-  "dependencies": {},
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.9.0",
     "@vue/compiler-sfc": "^3.2.19",
@@ -21,7 +20,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-vue": "^7.18.0",
     "prettier": "2.4.1",
-    "vite": "^2.5.10"
+    "vite": "^3.0.2"
   },
   "scripts": {
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
