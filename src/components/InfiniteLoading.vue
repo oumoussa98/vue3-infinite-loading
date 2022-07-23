@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, toRefs, onUnmounted, watch } from "vue";
+import { onMounted, ref, toRefs, onUnmounted, watch, nextTick } from "vue";
 
 import Spinner from "./Spinner.vue";
 import {
@@ -7,6 +7,7 @@ import {
   stateHandler,
   removeScrollEvent,
   infiniteEventEmitter,
+  isVisible,
 } from "../utils.js";
 
 const props = defineProps({
@@ -36,13 +37,13 @@ const params = {
 };
 
 const stateWatcher = (el, prevHeight) =>
-  watch(state, newVal => {
+  watch(state, async newVal => {
+    await nextTick();
     if (newVal == "loaded" && top) {
-      Promise.resolve().then(() => {
-        el.scrollTop = el.scrollHeight - prevHeight;
-      });
+      el.scrollTop = el.scrollHeight - prevHeight;
       prevHeight = el.scrollHeight;
     }
+    if (newVal == "loaded" && isVisible(vue3InfiniteLoading.value, el)) params.emitInfiniteEvent();
     if (newVal == "complete") removeScrollEvent(params);
   });
 

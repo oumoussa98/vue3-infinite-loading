@@ -23,8 +23,10 @@ const infiniteEventEmitter = (emit, stateHandler) => {
 const isVisible = (el, view) => {
   const rect = el.getBoundingClientRect();
   const viewRect = view.getBoundingClientRect();
+  const rectBottom = viewRect.bottom - rect.bottom;
   const rectTop = rect.top - viewRect.top;
-  return (rectTop <= view.clientHeight || !view.clientHeight);
+  if (rectTop > 0 && rectBottom > 0) return true;
+  return false;
 }
 
 // generate event handler
@@ -59,4 +61,4 @@ const removeScrollEvent = params => {
   target.removeEventListener("scroll", eventHandler);
 };
 
-export { stateHandler, infiniteEventEmitter, startScrollEvent, removeScrollEvent };
+export { stateHandler, infiniteEventEmitter, isVisible, startScrollEvent, removeScrollEvent };
