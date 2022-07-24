@@ -22,11 +22,7 @@ const infiniteEventEmitter = (emit, stateHandler) => {
 
 const isVisible = (el, view) => {
   const rect = el.getBoundingClientRect();
-  const viewRect = view.getBoundingClientRect();
-  const rectBottom = viewRect.bottom - rect.bottom;
-  const rectTop = rect.top - viewRect.top;
-  if (rectTop > 0 && rectBottom > 0) return true;
-  return false;
+  return (rect.top >= 0 && rect.bottom <= view.clientHeight);
 }
 
 // generate event handler
