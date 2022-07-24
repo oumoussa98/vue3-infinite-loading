@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 import Top from "./components/Top.vue";
 import Bottom from "./components/Bottom.vue";
 import Checkbox from "./components/Checkbox.vue";
@@ -14,9 +14,9 @@ let comments = ref([]);
 let mountname = ref("Unmount");
 
 const refresh = () => {
+  page = 0;
   comments.value.length = 0;
   resetData.value = !resetData.value;
-  page = 1;
 };
 
 const reset = () => {
@@ -28,7 +28,7 @@ const reset = () => {
   refresh();
 };
 
-const mountToggler = () => {
+const mountToggler = async () => {
   mount.value = !mount.value;
   if (!mount.value) mountname.value = "Mount";
   else mountname.value = "Unmount";
@@ -39,12 +39,9 @@ const targetToggler = async () => {
   if (target.value) target.value = false;
   else if (top.value) target.value = ".top-results";
   else if (!top.value) target.value = ".bottom-results";
-  await Promise.resolve().then(() => {
-    mountToggler();
-  });
-  await Promise.resolve().then(() => {
-    mountToggler();
-  });
+  mountToggler();
+  await nextTick();
+  mountToggler();
   refresh();
 };
 
@@ -56,12 +53,6 @@ const topToggler = async () => {
 };
 
 const distanceHandler = async () => {
-  await Promise.resolve().then(() => {
-    mountToggler();
-  });
-  await Promise.resolve().then(() => {
-    mountToggler();
-  });
   refresh();
 };
 
@@ -70,16 +61,14 @@ const load = async $state => {
   page++;
   try {
     const response = await fetch(
-      "https://jsonplaceholder.typicode.com/comments?_limit=10&_page=" + page
+      "https://jsonplaceholder.typicode.com/comments?_limit=5&_page=" + page
     );
     const json = await response.json();
-    if (json.length < 10) $state.complete();
+    if (json.length < 5) $state.complete();
     else {
-      setTimeout(() => {
-        if (!top.value) comments.value.push(...json);
-        else comments.value.unshift(...json);
-        $state.loaded();
-      }, 1500);
+      if (!top.value) comments.value.push(...json);
+      else comments.value.unshift(...json);
+      $state.loaded();
     }
   } catch (error) {
     $state.error();
@@ -93,8 +82,8 @@ const load = async $state => {
       <img src="./assets/github.svg" alt="github icon" />
     </a>
     <span class="props">
-      <Checkbox :checked="top" :disabled="!target" label="top" @click="topToggler">Top</Checkbox>
-      <Checkbox :checked="target" label="target" @click="targetToggler">Target</Checkbox>
+      <Checkbox :checked="top" :disabled="!target" label="top" @click="topToggler"> Top </Checkbox>
+      <Checkbox :checked="target" label="target" @click="targetToggler"> Target </Checkbox>
       <div>
         Distance:
         <input
@@ -230,6 +219,7 @@ body {
   font-weight: 300;
   width: 90%;
   max-width: 300px;
+  min-width: 260px;
   padding: 10px;
   text-align: center;
   margin: 0 auto 10px auto;
