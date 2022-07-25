@@ -22,8 +22,8 @@ const infiniteEventEmitter = (emit, stateHandler) => {
 
 const isVisible = (el, view) => {
   const rect = el.getBoundingClientRect();
-  return (rect.top >= 0 && rect.bottom <= view.clientHeight);
-}
+  return (rect.top >= 0 && rect.bottom <= view.clientHeight) || !view.clientHeight;
+};
 
 // generate event handler
 const getEventHandler = (el, { state, distance, emitInfiniteEvent, top }) => {
