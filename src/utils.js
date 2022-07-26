@@ -66,7 +66,8 @@ const startScrollEvent = params => {
 };
 
 // remove scroll event
-const removeScrollEvent = parentEl => {
+const removeScrollEvent = params => {
+  const parentEl = getParent(params.target);
   parentEl.removeEventListener("scroll", eventHandler);
 };
 

@@ -68,7 +68,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  removeScrollEvent(params.parentEl);
+  removeScrollEvent(params);
 });
 </script>
 
