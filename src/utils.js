@@ -18,43 +18,62 @@ const infiniteEventEmitter = (emit, stateHandler) => {
     stateHandler.loading();
     emit("infinite", stateHandler);
   };
-}
+};
 
 const isVisible = (el, view) => {
-  const rect = el.getBoundingClientRect();
-  return (rect.top >= 0 && rect.bottom <= view.clientHeight) || !view.clientHeight;
+  const elRect = el.getBoundingClientRect();
+  if (view === window) return elRect.top >= 0 && elRect.bottom <= view.innerHeight;
+  const viewRect = view.getBoundingClientRect();
+  return elRect.top >= viewRect.top && elRect.bottom <= viewRect.bottom;
+};
+
+const getParent = target => {
+  let parentEl = window;
+  if (target) {
+    parentEl = document.querySelector(target);
+    if (parentEl === document.body) return window;
+  }
+  return parentEl || window;
 };
 
 // generate event handler
-const getEventHandler = (el, { state, distance, emitInfiniteEvent, top }) => {
+const getEventHandler = params => {
   return () => {
-    const { scrollTop, scrollHeight, clientHeight } = el;
-    const validState = state.value == "loaded" || !state.value;
+    const scrollTop = params.parentEl.scrollTop || document.documentElement.scrollTop;
+    const scrollHeight = params.parentEl.scrollHeight || document.documentElement.scrollHeight;
+    const clientHeight = params.parentEl.clientHeight || params.parentEl.innerHeight;
+    const validState = params.state.value == "loaded" || params.state.value == "ready";
 
-    if (top && Math.ceil(scrollTop) - distance <= 0 && validState) emitInfiniteEvent();
-    if (!top && Math.ceil(scrollTop) + clientHeight >= scrollHeight - distance && validState)
-      emitInfiniteEvent();
+    if (!validState) return;
+
+    if (params.top && scrollTop - params.distance <= 0) params.emitInfiniteEvent();
+
+    if (!params.top && scrollTop + clientHeight >= scrollHeight - params.distance)
+      params.emitInfiniteEvent();
   };
 };
+
 // start scroll event
 let eventHandler;
 const startScrollEvent = params => {
-  if (params.target && !document.querySelector(params.target))
-    return console.error("Vue3 infinite loading: target prop should be a valid css selector");
+  params.parentEl = getParent(params.target);
 
-  const el = document.querySelector(params.target) || document.documentElement;
-  const target = document.querySelector(params.target) || window;
+  if (isVisible(params.infiniteLoading.value, params.parentEl) && params.firstLoad)
+    params.emitInfiniteEvent();
 
-  const infiniteLoading = params.vue3InfiniteLoading.value;
-  if (isVisible(infiniteLoading, el) && params.firstLoad) params.emitInfiniteEvent();
-
-  eventHandler = getEventHandler(el, params);
-  target.addEventListener("scroll", eventHandler);
+  eventHandler = getEventHandler(params);
+  params.parentEl.addEventListener("scroll", eventHandler);
 };
+
 // remove scroll event
-const removeScrollEvent = params => {
-  const target = document.querySelector(params.target) || window;
-  target.removeEventListener("scroll", eventHandler);
+const removeScrollEvent = parentEl => {
+  parentEl.removeEventListener("scroll", eventHandler);
 };
 
-export { stateHandler, infiniteEventEmitter, isVisible, startScrollEvent, removeScrollEvent };
+export {
+  stateHandler,
+  infiniteEventEmitter,
+  isVisible,
+  startScrollEvent,
+  removeScrollEvent,
+};
