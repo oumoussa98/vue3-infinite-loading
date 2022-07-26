@@ -21,54 +21,59 @@ const props = defineProps({
 
 const emit = defineEmits(["infinite"]);
 
-const vue3InfiniteLoading = ref(null);
-const state = ref("");
+const infiniteLoading = ref(null);
+const state = ref("ready");
 const { top, target, distance, firstLoad, slots } = props;
 const { identifier } = toRefs(props);
 
 const params = {
-  vue3InfiniteLoading,
+  infiniteLoading,
   state,
   target,
   distance,
   top,
   firstLoad,
   emitInfiniteEvent: infiniteEventEmitter(emit, stateHandler(state)),
+  parentEl: null,
 };
 
-const stateWatcher = (el, prevHeight) =>
+const stateWatcher = () =>
   watch(state, async newVal => {
+    const parentEl =
+      params.parentEl === window ? document.documentElement : params.parentEl;
+    const prevHeight = parentEl.scrollHeight;
+
     await nextTick();
-    if (newVal == "loaded" && top) {
-      el.scrollTop = el.scrollHeight - prevHeight;
-      prevHeight = el.scrollHeight;
-    }
-    if (newVal == "loaded" && isVisible(vue3InfiniteLoading.value, el)) params.emitInfiniteEvent();
+
+    if (newVal == "loaded" && top)
+      parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
+
+    if (newVal == "loaded" && isVisible(infiniteLoading.value, params.parentEl))
+      params.emitInfiniteEvent();
+
     if (newVal == "complete") removeScrollEvent(params);
   });
 
 const identifierWatcher = () =>
   watch(identifier, () => {
-    state.value = "";
+    state.value = "ready";
     removeScrollEvent(params);
     startScrollEvent(params);
   });
 
 onMounted(() => {
   startScrollEvent(params);
-  let el = document.querySelector(target) || document.documentElement;
-  let prevHeight = el.scrollHeight;
-  stateWatcher(el, prevHeight);
+  stateWatcher();
   if (identifier) identifierWatcher();
 });
 
 onUnmounted(() => {
-  removeScrollEvent(params);
+  removeScrollEvent(params.parentEl);
 });
 </script>
 
 <template>
-  <div ref="vue3InfiniteLoading">
+  <div ref="infiniteLoading">
     <slot v-if="state == 'loading'" name="spinner">
       <Spinner />
     </slot>
@@ -84,7 +89,7 @@ onUnmounted(() => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .state-error {
   display: flex;
   flex-direction: column;
