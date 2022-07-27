@@ -3,13 +3,15 @@ import { onMounted, ref, toRefs, onUnmounted, watch, nextTick } from "vue";
 
 import Spinner from "./Spinner.vue";
 import {
-  startScrollEvent,
+  startObserver,
+  stopObserver,
   stateHandler,
-  removeScrollEvent,
-  infiniteEventEmitter,
+  initEmitter,
   isVisible,
+  getScrollHeight,
 } from "../utils.js";
 
+const emit = defineEmits(["infinite"]);
 const props = defineProps({
   top: { type: Boolean, required: false },
   target: { type: [String, Boolean], required: false },
@@ -19,8 +21,6 @@ const props = defineProps({
   slots: { type: Object, required: false },
 });
 
-const emit = defineEmits(["infinite"]);
-
 const infiniteLoading = ref(null);
 const state = ref("ready");
 const { top, target, distance, firstLoad, slots } = props;
@@ -28,47 +28,40 @@ const { identifier } = toRefs(props);
 
 const params = {
   infiniteLoading,
-  state,
   target,
   distance,
   top,
   firstLoad,
-  emitInfiniteEvent: infiniteEventEmitter(emit, stateHandler(state)),
+  emit: initEmitter(emit, stateHandler(state)),
   parentEl: null,
 };
 
 const stateWatcher = () =>
   watch(state, async newVal => {
-    const parentEl =
-      params.parentEl === window ? document.documentElement : params.parentEl;
-    const prevHeight = parentEl.scrollHeight;
-
+    const parentEl = params.parentEl;
+    const prevHeight = getScrollHeight(parentEl);
     await nextTick();
-
-    if (newVal == "loaded" && top)
-      parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
-
-    if (newVal == "loaded" && isVisible(infiniteLoading.value, params.parentEl))
-      params.emitInfiniteEvent();
-
-    if (newVal == "complete") removeScrollEvent(params);
+    const currHeight = getScrollHeight(parentEl);
+    if (newVal == "loaded" && top) parentEl.scrollTop = currHeight - prevHeight;
+    if (newVal == "loaded" && isVisible(infiniteLoading.value, parentEl)) params.emit();
+    if (newVal == "complete") stopObserver();
   });
 
 const identifierWatcher = () =>
   watch(identifier, () => {
     state.value = "ready";
-    removeScrollEvent(params);
-    startScrollEvent(params);
+    stopObserver();
+    startObserver(params);
   });
 
 onMounted(() => {
-  startScrollEvent(params);
+  startObserver(params);
   stateWatcher();
   if (identifier) identifierWatcher();
 });
 
 onUnmounted(() => {
-  removeScrollEvent(params);
+  stopObserver();
 });
 </script>
 

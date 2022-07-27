@@ -13,7 +13,8 @@ const stateHandler = state => ({
   },
 });
 
-const infiniteEventEmitter = (emit, stateHandler) => {
+let emit;
+const initEmitter = (emit, stateHandler) => {
   return () => {
     stateHandler.loading();
     emit("infinite", stateHandler);
@@ -29,52 +30,36 @@ const isVisible = (el, view) => {
 
 const getParent = target => {
   let parentEl = window;
-  if (target) {
-    parentEl = document.querySelector(target);
-    if (parentEl === document.body) return window;
-  }
+  if (target) parentEl = document.querySelector(target);
   return parentEl || window;
 };
 
-// generate event handler
-const getEventHandler = params => {
-  return () => {
-    const scrollTop = params.parentEl.scrollTop || document.documentElement.scrollTop;
-    const scrollHeight = params.parentEl.scrollHeight || document.documentElement.scrollHeight;
-    const clientHeight = params.parentEl.clientHeight || params.parentEl.innerHeight;
-    const validState = params.state.value == "loaded" || params.state.value == "ready";
-
-    if (!validState) return;
-
-    if (params.top && scrollTop - params.distance <= 0) params.emitInfiniteEvent();
-
-    if (!params.top && scrollTop + clientHeight >= scrollHeight - params.distance)
-      params.emitInfiniteEvent();
-  };
+const getScrollHeight = el => {
+  return el.scrollHeight || document.documentElement.scrollHeight;
 };
 
-// start scroll event
-let eventHandler;
-const startScrollEvent = params => {
+const intersect = entries => {
+  const entry = entries[0];
+  if (entry.isIntersecting) emit();
+};
+
+let observer;
+const startObserver = params => {
   params.parentEl = getParent(params.target);
-
-  if (isVisible(params.infiniteLoading.value, params.parentEl) && params.firstLoad)
-    params.emitInfiniteEvent();
-
-  eventHandler = getEventHandler(params);
-  params.parentEl.addEventListener("scroll", eventHandler);
+  emit = params.emit;
+  observer = new IntersectionObserver(intersect, null);
+  observer.observe(params.infiniteLoading.value);
 };
 
-// remove scroll event
-const removeScrollEvent = params => {
-  const parentEl = getParent(params.target);
-  parentEl.removeEventListener("scroll", eventHandler);
+const stopObserver = () => {
+  observer.disconnect();
 };
 
 export {
+  startObserver,
+  stopObserver,
   stateHandler,
-  infiniteEventEmitter,
+  initEmitter,
   isVisible,
-  startScrollEvent,
-  removeScrollEvent,
+  getScrollHeight,
 };
