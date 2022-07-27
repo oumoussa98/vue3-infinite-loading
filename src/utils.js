@@ -23,13 +23,13 @@ const initEmitter = (emit, stateHandler) => {
 
 const isVisible = (el, view) => {
   const elRect = el.getBoundingClientRect();
-  if (view === window) return elRect.top >= 0 && elRect.bottom <= view.innerHeight;
+  if (!view) return elRect.top >= 0 && elRect.bottom <= window.innerHeight;
   const viewRect = view.getBoundingClientRect();
   return elRect.top >= viewRect.top && elRect.bottom <= viewRect.bottom;
 };
 
 const getScrollHeight = el => {
-  return el.scrollHeight || document.documentElement.scrollHeight;
+  return el?.scrollHeight || document.documentElement.scrollHeight;
 };
 
 let load = true;
@@ -43,9 +43,10 @@ const intersect = entries => {
 
 let observer;
 const startObserver = params => {
-  params.parentEl = document.querySelector(params.target) || window;
+  params.parentEl = document.querySelector(params.target) || null;
   emit = params.emit;
-  observer = new IntersectionObserver(intersect, null);
+  const options = { root: params.parentEl }
+  observer = new IntersectionObserver(intersect, options);
   if (!params.firstLoad) load = false;
   observer.observe(params.infiniteLoading.value);
 };

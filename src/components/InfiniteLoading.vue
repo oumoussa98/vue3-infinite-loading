@@ -1,7 +1,7 @@
 <script setup>
+import Spinner from "./Spinner.vue";
 import { onMounted, ref, toRefs, onUnmounted, watch, nextTick } from "vue";
 
-import Spinner from "./Spinner.vue";
 import {
   startObserver,
   stopObserver,
