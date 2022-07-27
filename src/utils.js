@@ -28,26 +28,25 @@ const isVisible = (el, view) => {
   return elRect.top >= viewRect.top && elRect.bottom <= viewRect.bottom;
 };
 
-const getParent = target => {
-  let parentEl = window;
-  if (target) parentEl = document.querySelector(target);
-  return parentEl || window;
-};
-
 const getScrollHeight = el => {
   return el.scrollHeight || document.documentElement.scrollHeight;
 };
 
+let load = true;
 const intersect = entries => {
   const entry = entries[0];
-  if (entry.isIntersecting) emit();
+  if (entry.isIntersecting) {
+    if (load) emit();
+    load = true;
+  }
 };
 
 let observer;
 const startObserver = params => {
-  params.parentEl = getParent(params.target);
+  params.parentEl = document.querySelector(params.target) || window;
   emit = params.emit;
   observer = new IntersectionObserver(intersect, null);
+  if (!params.firstLoad) load = false;
   observer.observe(params.infiniteLoading.value);
 };
 

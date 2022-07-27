@@ -15,7 +15,6 @@ const emit = defineEmits(["infinite"]);
 const props = defineProps({
   top: { type: Boolean, required: false },
   target: { type: [String, Boolean], required: false },
-  distance: { type: Number, required: false, default: 100 },
   identifier: { required: false },
   firstLoad: { type: Boolean, required: false, default: true },
   slots: { type: Object, required: false },
@@ -23,13 +22,12 @@ const props = defineProps({
 
 const infiniteLoading = ref(null);
 const state = ref("ready");
-const { top, target, distance, firstLoad, slots } = props;
+const { top, slots, firstLoad, target } = props;
 const { identifier } = toRefs(props);
 
 const params = {
   infiniteLoading,
   target,
-  distance,
   top,
   firstLoad,
   emit: initEmitter(emit, stateHandler(state)),
