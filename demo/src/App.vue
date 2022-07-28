@@ -8,7 +8,6 @@ let page = 0;
 let mount = ref(true);
 let resetData = ref(false);
 let target = ref(".bottom-results");
-let distance = ref(100);
 let top = ref(false);
 let comments = ref([]);
 let mountname = ref("Unmount");
@@ -21,7 +20,6 @@ const refresh = () => {
 
 const reset = () => {
   target.value = ".bottom-results";
-  distance.value = 100;
   top.value = false;
   mount.value = true;
   mountname.value = "Unmount";
@@ -50,10 +48,9 @@ const topToggler = async () => {
   if (top.value) target.value = ".top-results";
   else target.value = ".bottom-results";
   refresh();
-};
-
-const distanceHandler = async () => {
-  refresh();
+  mountToggler();
+  await nextTick();
+  mountToggler();
 };
 
 const load = async $state => {
@@ -78,21 +75,19 @@ const load = async $state => {
 
 <template>
   <div class="settings">
-    <a target="_blank" href="https://github.com/oumoussa98/vue3-infinite-loading/tree/main/example">
+    <a
+      target="_blank"
+      href="https://github.com/oumoussa98/vue3-infinite-loading/tree/main/example"
+    >
       <img src="./assets/github.svg" alt="github icon" />
     </a>
     <span class="props">
-      <Checkbox :checked="top" :disabled="!target" label="top" @click="topToggler"> Top </Checkbox>
-      <Checkbox :checked="target" label="target" @click="targetToggler"> Target </Checkbox>
-      <div>
-        Distance:
-        <input
-          @change="distanceHandler"
-          class="distance"
-          v-model.number.lazy="distance"
-          type="text"
-        />
-      </div>
+      <Checkbox :checked="top" :disabled="!target" label="top" @click="topToggler">
+        Top
+      </Checkbox>
+      <Checkbox :checked="target" label="target" @click="targetToggler">
+        Target
+      </Checkbox>
     </span>
     <span class="buttons">
       <button class="btn-mount" @click="mountToggler">{{ mountname }}</button>
@@ -103,18 +98,16 @@ const load = async $state => {
   <div v-if="mount">
     <Top
       v-if="top"
-      :distance="distance"
+      :target="target"
       :comments="comments"
       :identifier="resetData"
-      :target="target"
       @infinite="load"
     />
     <Bottom
       v-if="!top"
-      :distance="distance"
+      :target="target"
       :comments="comments"
       :identifier="resetData"
-      :target="target"
       @infinite="load"
     />
   </div>
@@ -167,15 +160,6 @@ body {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-}
-.distance {
-  width: 50px;
-  border-radius: 5px;
-  padding: 4px 5px;
-  outline: none;
-  border: none;
-  background: #6a6c6d;
-  color: inherit;
 }
 .buttons {
   display: flex;
