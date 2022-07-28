@@ -17,20 +17,20 @@ const props = defineProps({
   target: { type: [String, Boolean], required: false },
   distance: { type: Number, required: false, default: 0 },
   identifier: { required: false },
-  firstLoad: { type: Boolean, required: false, default: true },
+  firstload: { type: Boolean, required: false, default: true },
   slots: { type: Object, required: false },
 });
 
 const infiniteLoading = ref(null);
 const state = ref("ready");
-const { top, slots, firstLoad, target, distance } = props;
+const { top, firstload, target, distance } = props;
 const { identifier } = toRefs(props);
 
 const params = {
   infiniteLoading,
   target,
   top,
-  firstLoad,
+  firstload,
   distance,
   emit: initEmitter(emit, stateHandler(state)),
   parentEl: null,

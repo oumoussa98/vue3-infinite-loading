@@ -40,8 +40,8 @@ const startObserver = params => {
     entries => {
       const entry = entries[0];
       if (entry.isIntersecting) {
-        if (params.firstLoad) params.emit();
-        params.firstLoad = true;
+        if (params.firstload) params.emit();
+        params.firstload = true;
       }
     },
     { root: params.parentEl, rootMargin }

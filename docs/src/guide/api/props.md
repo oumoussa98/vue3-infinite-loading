@@ -28,7 +28,7 @@
 - **Details**:
   The component will be reset if this property has changed
 
-## firstLoad
+## firstload
 
 - **Type**: `Boolean`
 - **Default**: `true`
