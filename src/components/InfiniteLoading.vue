@@ -15,6 +15,7 @@ const emit = defineEmits(["infinite"]);
 const props = defineProps({
   top: { type: Boolean, required: false },
   target: { type: [String, Boolean], required: false },
+  distance: { type: Number, required: false, default: 0 },
   identifier: { required: false },
   firstLoad: { type: Boolean, required: false, default: true },
   slots: { type: Object, required: false },
@@ -22,7 +23,7 @@ const props = defineProps({
 
 const infiniteLoading = ref(null);
 const state = ref("ready");
-const { top, slots, firstLoad, target } = props;
+const { top, slots, firstLoad, target, distance } = props;
 const { identifier } = toRefs(props);
 
 const params = {
@@ -30,6 +31,7 @@ const params = {
   target,
   top,
   firstLoad,
+  distance,
   emit: initEmitter(emit, stateHandler(state)),
   parentEl: null,
 };
@@ -71,10 +73,10 @@ onUnmounted(() => {
     <slot v-if="state == 'complete'" name="complete">
       <span> {{ slots?.complete || "No more results!" }} </span>
     </slot>
-    <slot v-if="state == 'error'" name="error" :retry="params.emitInfiniteEvent">
+    <slot v-if="state == 'error'" name="error" :retry="params.emit">
       <span class="state-error">
         <span>{{ slots?.error || "Oops something went wrong!" }}</span>
-        <button class="retry" @click="params.emitInfiniteEvent">retry</button>
+        <button class="retry" @click="params.emit">retry</button>
       </span>
     </slot>
   </div>

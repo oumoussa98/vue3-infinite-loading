@@ -13,7 +13,6 @@ const stateHandler = state => ({
   },
 });
 
-let emit;
 const initEmitter = (emit, stateHandler) => {
   return () => {
     stateHandler.loading();
@@ -32,21 +31,21 @@ const getScrollHeight = el => {
   return el?.scrollHeight || document.documentElement.scrollHeight;
 };
 
-let load = true;
-const intersect = entries => {
-  const entry = entries[0];
-  if (entry.isIntersecting) {
-    if (load) emit();
-    load = true;
-  }
-};
-
 let observer;
 const startObserver = params => {
   params.parentEl = document.querySelector(params.target) || null;
-  emit = params.emit;
-  observer = new IntersectionObserver(intersect, null);
-  if (!params.firstLoad) load = false;
+  let rootMargin = `0px 0px ${params.distance}px 0px`;
+  if (params.top) rootMargin = `${params.distance}px 0px 0px 0px`;
+  observer = new IntersectionObserver(
+    entries => {
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        if (params.firstLoad) params.emit();
+        params.firstLoad = true;
+      }
+    },
+    { root: params.parentEl, rootMargin }
+  );
   observer.observe(params.infiniteLoading.value);
 };
 
