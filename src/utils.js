@@ -45,8 +45,7 @@ let observer;
 const startObserver = params => {
   params.parentEl = document.querySelector(params.target) || null;
   emit = params.emit;
-  const options = { root: params.parentEl }
-  observer = new IntersectionObserver(intersect, options);
+  observer = new IntersectionObserver(intersect, null);
   if (!params.firstLoad) load = false;
   observer.observe(params.infiniteLoading.value);
 };
