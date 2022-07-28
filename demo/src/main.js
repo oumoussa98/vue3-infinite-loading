@@ -1,6 +1,6 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-import "v3-infinite-loading/lib/style.css";
+import "../lib/style.css";
 
 import InfiniteLoading from "../../src/components/InfiniteLoading.vue";
 
