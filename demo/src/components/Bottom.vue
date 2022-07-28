@@ -14,7 +14,7 @@ const { comments } = toRefs(props);
         <div>{{ comment.email }}</div>
         <div>{{ comment.id }}</div>
       </div>
-      <infinite-loading v-bind="$attrs" />
+      <infinite-loading class="loader" v-bind="$attrs" />
     </div>
   </div>
 </template>

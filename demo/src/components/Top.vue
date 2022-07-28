@@ -10,7 +10,7 @@ const { comments } = toRefs(props);
 <template>
   <div v-bind="$attrs">
     <div class="results" :class="{ 'top-results': $attrs.target }">
-      <infinite-loading top v-bind="$attrs" />
+      <infinite-loading class="loader" top v-bind="$attrs" />
       <div class="result" v-for="comment in comments" :key="comment.id">
         <div>{{ comment.email }}</div>
         <div>{{ comment.id }}</div>

@@ -3,35 +3,32 @@ import { ref, nextTick } from "vue";
 import Top from "./components/Top.vue";
 import Bottom from "./components/Bottom.vue";
 import Checkbox from "./components/Checkbox.vue";
-
 let page = 0;
 let mount = ref(true);
 let resetData = ref(false);
 let target = ref(".bottom-results");
+let distance = ref(0);
 let top = ref(false);
 let comments = ref([]);
 let mountname = ref("Unmount");
-
 const refresh = () => {
   page = 0;
   comments.value.length = 0;
   resetData.value = !resetData.value;
 };
-
 const reset = () => {
   target.value = ".bottom-results";
+  distance.value = 0;
   top.value = false;
   mount.value = true;
   mountname.value = "Unmount";
   refresh();
 };
-
 const mountToggler = async () => {
   mount.value = !mount.value;
   if (!mount.value) mountname.value = "Mount";
   else mountname.value = "Unmount";
 };
-
 const targetToggler = async () => {
   top.value = false;
   if (target.value) target.value = false;
@@ -42,17 +39,21 @@ const targetToggler = async () => {
   mountToggler();
   refresh();
 };
-
 const topToggler = async () => {
   top.value = !top.value;
   if (top.value) target.value = ".top-results";
   else target.value = ".bottom-results";
-  refresh();
   mountToggler();
   await nextTick();
   mountToggler();
+  refresh();
 };
-
+const distanceHandler = async () => {
+  mountToggler();
+  await nextTick();
+  mountToggler();
+  refresh();
+};
 const load = async $state => {
   console.log("loading more...");
   page++;
@@ -88,6 +89,15 @@ const load = async $state => {
       <Checkbox :checked="target" label="target" @click="targetToggler">
         Target
       </Checkbox>
+      <div>
+        Distance:
+        <input
+          @change="distanceHandler"
+          class="distance"
+          v-model.number.lazy="distance"
+          type="text"
+        />
+      </div>
     </span>
     <span class="buttons">
       <button class="btn-mount" @click="mountToggler">{{ mountname }}</button>
@@ -98,16 +108,18 @@ const load = async $state => {
   <div v-if="mount">
     <Top
       v-if="top"
-      :target="target"
+      :distance="distance"
       :comments="comments"
       :identifier="resetData"
+      :target="target"
       @infinite="load"
     />
     <Bottom
       v-if="!top"
-      :target="target"
+      :distance="distance"
       :comments="comments"
       :identifier="resetData"
+      :target="target"
       @infinite="load"
     />
   </div>
@@ -161,6 +173,15 @@ body {
   gap: 20px;
   flex-wrap: wrap;
 }
+.distance {
+  width: 50px;
+  border-radius: 5px;
+  padding: 4px 5px;
+  outline: none;
+  border: none;
+  background: #6a6c6d;
+  color: inherit;
+}
 .buttons {
   display: flex;
   gap: 20px;
@@ -209,6 +230,9 @@ body {
   margin: 0 auto 10px auto;
   background: #101011;
   border-radius: 10px;
+}
+.loader {
+  padding: 10px;
 }
 .results::-webkit-scrollbar-track {
   border-radius: 4px;
