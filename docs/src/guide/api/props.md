@@ -8,6 +8,13 @@
   This property is used to specify the scrollable element, it can be any valid css selector
   If not set it defaults to the window
 
+## distance
+
+- **Type**: `Number`
+- **Default**: `100`
+- **Details**:
+  The `infinite` event will be fired if the scroll distance is less than this value.
+
 ## top
 
 - **Type**: `Boolean`
