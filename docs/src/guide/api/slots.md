@@ -2,43 +2,43 @@
 
 ## `spinner`
 
-  - **Details**:
+- **Details**:
   Used to create a custom loading spinner
-  - **example**:
+- **example**:
 
-  ```html
-  <template #spinner>
-    <span>loading...</span>
-  </template>
-  ```
+```html
+<template #spinner>
+  <span>loading...</span>
+</template>
+```
 
 ###
 
 ## `complete`
 
-  - **Details**:
-    Used to create a custom display message when there is no more data (`$state.complete`)
+- **Details**:
+  Used to create a custom display message when there is no more data (`$state.complete`)
 
-  - **example**:
+- **example**:
 
-  ```html
-  <template #complete>
-    <span>No more data found!</span>
-  </template>
-  ```
+```html
+<template #complete>
+  <span>No more data found!</span>
+</template>
+```
 
 ###
 
 ## `error`
 
-  - **bind**: `retry` function
-  - **Details**:
-    Used to create a custom display message when an error occures (`$state.error`)
+- **bind**: `retry` function
+- **Details**:
+  Used to create a custom display message when an error occures (`$state.error`)
 
-  - **example**:
+- **example**:
 
-  ```html
-  <template #error="{ retry }">
-    <button @click="retry">Retry</button>
-  </template>
-  ```
+```html
+<template #error="{ retry }">
+  <button @click="retry">Retry</button>
+</template>
+```

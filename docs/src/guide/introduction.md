@@ -8,7 +8,7 @@ Light and simple infinite scroll component compatible with vue.js 3 and vite, to
 
 ## How it works
 
-The component fires an `infinite` event when the user scrolls to the bottom or while the component is visible in the viewport of the `target` element passed as prop.
+The component fires an `infinite` event while the component is visible in the viewport using intersection observer.
 
 ## Contribute
 

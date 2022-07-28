@@ -13,7 +13,7 @@ const stateHandler = state => ({
   },
 });
 
-const infiniteEventEmitter = (emit, stateHandler) => {
+const initEmitter = (emit, stateHandler) => {
   return () => {
     stateHandler.loading();
     emit("infinite", stateHandler);
@@ -22,59 +22,42 @@ const infiniteEventEmitter = (emit, stateHandler) => {
 
 const isVisible = (el, view) => {
   const elRect = el.getBoundingClientRect();
-  if (view === window) return elRect.top >= 0 && elRect.bottom <= view.innerHeight;
+  if (!view) return elRect.top >= 0 && elRect.bottom <= window.innerHeight;
   const viewRect = view.getBoundingClientRect();
   return elRect.top >= viewRect.top && elRect.bottom <= viewRect.bottom;
 };
 
-const getParent = target => {
-  let parentEl = window;
-  if (target) {
-    parentEl = document.querySelector(target);
-    if (parentEl === document.body) return window;
-  }
-  return parentEl || window;
+const getScrollHeight = el => {
+  return el?.scrollHeight || document.documentElement.scrollHeight;
 };
 
-// generate event handler
-const getEventHandler = params => {
-  return () => {
-    const scrollTop = params.parentEl.scrollTop || document.documentElement.scrollTop;
-    const scrollHeight = params.parentEl.scrollHeight || document.documentElement.scrollHeight;
-    const clientHeight = params.parentEl.clientHeight || params.parentEl.innerHeight;
-    const validState = params.state.value == "loaded" || params.state.value == "ready";
-
-    if (!validState) return;
-
-    if (params.top && scrollTop - params.distance <= 0) params.emitInfiniteEvent();
-
-    if (!params.top && scrollTop + clientHeight >= scrollHeight - params.distance)
-      params.emitInfiniteEvent();
-  };
+let observer;
+const startObserver = params => {
+  params.parentEl = document.querySelector(params.target) || null;
+  let rootMargin = `0px 0px ${params.distance}px 0px`;
+  if (params.top) rootMargin = `${params.distance}px 0px 0px 0px`;
+  observer = new IntersectionObserver(
+    entries => {
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        if (params.firstload) params.emit();
+        params.firstload = true;
+      }
+    },
+    { root: params.parentEl, rootMargin }
+  );
+  observer.observe(params.infiniteLoading.value);
 };
 
-// start scroll event
-let eventHandler;
-const startScrollEvent = params => {
-  params.parentEl = getParent(params.target);
-
-  if (isVisible(params.infiniteLoading.value, params.parentEl) && params.firstLoad)
-    params.emitInfiniteEvent();
-
-  eventHandler = getEventHandler(params);
-  params.parentEl.addEventListener("scroll", eventHandler);
-};
-
-// remove scroll event
-const removeScrollEvent = params => {
-  const parentEl = getParent(params.target);
-  parentEl.removeEventListener("scroll", eventHandler);
+const stopObserver = () => {
+  observer.disconnect();
 };
 
 export {
+  startObserver,
+  stopObserver,
   stateHandler,
-  infiniteEventEmitter,
+  initEmitter,
   isVisible,
-  startScrollEvent,
-  removeScrollEvent,
+  getScrollHeight,
 };

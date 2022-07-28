@@ -1,6 +1,6 @@
 {
   "name": "v3-infinite-loading",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "Infinite scroller component for vuejs-3",
   "homepage": "https://vue3-infinite-loading.netlify.app/",
   "repository": {
@@ -22,10 +22,19 @@
     "prettier": "2.4.1",
     "vite": "^3.0.2"
   },
+  "workspaces": [
+    "demo"
+  ],
   "scripts": {
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
-    "build:lib": "vite build --mode lib"
+    "dev:docs": "cd docs && npm run dev",
+    "dev:demo": "cd demo && npm run dev",
+    "serve:docs": "cd docs && npm run serve",
+    "serve:demo": "cd demo && npm run serve",
+    "build:lib": "vite build --mode lib",
+    "build:demo": "rm -rf ./demo/lib && npm run build:lib && mv lib demo && cd demo && npm run build",
+    "build:docs": "cd docs && npm run build"
   },
   "keywords": [
     "vue3",

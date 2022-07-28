@@ -1,5 +1,6 @@
-.vt-doc a[href^="https://sfc.vuejs.org"]:before {
-  content: "▶";
+.vt-doc a[href^="https://sfc.vuejs.org"]:before
+{
+  content: '▶';
   width: 20px;
   height: 20px;
   display: inline-block;

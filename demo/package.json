@@ -1,5 +1,5 @@
 {
-  "name": "vu3-infinite-loading-example",
+  "name": "vu3-infinite-loading-demo",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -7,7 +7,6 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "v3-infinite-loading": "^1.1.4",
     "vue": "^3.2.13"
   },
   "devDependencies": {

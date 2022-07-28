@@ -3,37 +3,32 @@ import { ref, nextTick } from "vue";
 import Top from "./components/Top.vue";
 import Bottom from "./components/Bottom.vue";
 import Checkbox from "./components/Checkbox.vue";
-
 let page = 0;
 let mount = ref(true);
 let resetData = ref(false);
 let target = ref(".bottom-results");
-let distance = ref(100);
+let distance = ref(0);
 let top = ref(false);
 let comments = ref([]);
 let mountname = ref("Unmount");
-
 const refresh = () => {
   page = 0;
   comments.value.length = 0;
   resetData.value = !resetData.value;
 };
-
 const reset = () => {
   target.value = ".bottom-results";
-  distance.value = 100;
+  distance.value = 0;
   top.value = false;
   mount.value = true;
   mountname.value = "Unmount";
   refresh();
 };
-
 const mountToggler = async () => {
   mount.value = !mount.value;
   if (!mount.value) mountname.value = "Mount";
   else mountname.value = "Unmount";
 };
-
 const targetToggler = async () => {
   top.value = false;
   if (target.value) target.value = false;
@@ -44,18 +39,21 @@ const targetToggler = async () => {
   mountToggler();
   refresh();
 };
-
 const topToggler = async () => {
   top.value = !top.value;
   if (top.value) target.value = ".top-results";
   else target.value = ".bottom-results";
+  mountToggler();
+  await nextTick();
+  mountToggler();
   refresh();
 };
-
 const distanceHandler = async () => {
+  mountToggler();
+  await nextTick();
+  mountToggler();
   refresh();
 };
-
 const load = async $state => {
   console.log("loading more...");
   page++;
@@ -78,12 +76,19 @@ const load = async $state => {
 
 <template>
   <div class="settings">
-    <a target="_blank" href="https://github.com/oumoussa98/vue3-infinite-loading/tree/main/example">
+    <a
+      target="_blank"
+      href="https://github.com/oumoussa98/vue3-infinite-loading/tree/main/example"
+    >
       <img src="./assets/github.svg" alt="github icon" />
     </a>
     <span class="props">
-      <Checkbox :checked="top" :disabled="!target" label="top" @click="topToggler"> Top </Checkbox>
-      <Checkbox :checked="target" label="target" @click="targetToggler"> Target </Checkbox>
+      <Checkbox :checked="top" :disabled="!target" label="top" @click="topToggler">
+        Top
+      </Checkbox>
+      <Checkbox :checked="target" label="target" @click="targetToggler">
+        Target
+      </Checkbox>
       <div>
         Distance:
         <input
@@ -225,6 +230,9 @@ body {
   margin: 0 auto 10px auto;
   background: #101011;
   border-radius: 10px;
+}
+.loader {
+  padding: 10px;
 }
 .results::-webkit-scrollbar-track {
   border-radius: 4px;

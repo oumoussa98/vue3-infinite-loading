@@ -1,31 +1,30 @@
 <script setup>
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 const displayHint = async (text) => {
-  const el = document.querySelector("div.install .inner-text");
-  el.innerText = text;
-  el.parentElement.style.color = "#00c96f";
+  const el = document.querySelector('div.install .inner-text')
+  el.innerText = text
+  el.parentElement.style.color = '#00c96f'
   await sleep(1500)
-  el.parentElement.style.color = "#aac8e4"
-  el.innerText = "npm i v3-infinite-loading";
-};
+  el.parentElement.style.color = '#aac8e4'
+  el.innerText = 'npm i v3-infinite-loading'
+}
 
 const copyText = () => {
   navigator.clipboard
-        .writeText("npm i v3-infinite-loading")
-        .then(() => {
-          displayHint("Copied to clipboard");
-        })
-        .catch(() => {
-          displayHint("Failed to copy 😞");
-        });
-};
-
+    .writeText('npm i v3-infinite-loading')
+    .then(() => {
+      displayHint('Copied to clipboard')
+    })
+    .catch(() => {
+      displayHint('Failed to copy 😞')
+    })
+}
 </script>
 
 <template>
   <section id="hero">
     <h1 class="tagline">
-       Vue.js 3
+      Vue.js 3
       <span class="accent">Infinite</span>
       <br />loading Component
     </h1>
@@ -52,36 +51,47 @@ const copyText = () => {
       <div @click="copyText" class="install">
         <span class="inner-text">npm i v3-infinite-loading</span>
         <svg width="16" height="19" xmlns="http://www.w3.org/2000/svg">
-        <g>
-          <title>Layer 1</title>
-          <path fill="#666666" stroke="null" id="svg_1" opacity="0.35" d="m2.50926,14.0668l0,-11.0873c0,-1.53097 1.24085,-2.77183 2.77182,-2.77183l4.61971,0l5.54365,5.54365l0,8.31548c0,1.53097 -1.24085,2.77182 -2.77182,2.77182l-7.39154,0c-1.53097,0 -2.77182,-1.24085 -2.77182,-2.77182z"/>
-          <path stroke="null" fill="#666666" id="svg_2" d="m9.84788,3.95635l0,-3.69577l5.54365,5.54365l-3.69577,0c-1.02096,0 -1.84788,-0.82693 -1.84788,-1.84788z"/>
-          <path stroke="null" fill="#757575" id="svg_3" d="m5.22817,16.89153c-1.53097,0 -2.77183,-1.24085 -2.77183,-2.77183l0,-11.0873c-1.02096,0 -1.84788,0.82693 -1.84788,1.84788l0,11.0873c0,1.53097 1.24085,2.77183 2.77183,2.77183l7.39153,0c1.02096,0 1.84788,-0.82693 1.84788,-1.84788l-7.39153,0z"/>
-        </g>
+          <g>
+            <title>Layer 1</title>
+            <path
+              fill="#666666"
+              stroke="null"
+              id="svg_1"
+              opacity="0.35"
+              d="m2.50926,14.0668l0,-11.0873c0,-1.53097 1.24085,-2.77183 2.77182,-2.77183l4.61971,0l5.54365,5.54365l0,8.31548c0,1.53097 -1.24085,2.77182 -2.77182,2.77182l-7.39154,0c-1.53097,0 -2.77182,-1.24085 -2.77182,-2.77182z"
+            />
+            <path
+              stroke="null"
+              fill="#666666"
+              id="svg_2"
+              d="m9.84788,3.95635l0,-3.69577l5.54365,5.54365l-3.69577,0c-1.02096,0 -1.84788,-0.82693 -1.84788,-1.84788z"
+            />
+            <path
+              stroke="null"
+              fill="#757575"
+              id="svg_3"
+              d="m5.22817,16.89153c-1.53097,0 -2.77183,-1.24085 -2.77183,-2.77183l0,-11.0873c-1.02096,0 -1.84788,0.82693 -1.84788,1.84788l0,11.0873c0,1.53097 1.24085,2.77183 2.77183,2.77183l7.39153,0c1.02096,0 1.84788,-0.82693 1.84788,-1.84788l-7.39153,0z"
+            />
+          </g>
         </svg>
       </div>
     </div>
   </section>
 
-
   <section id="highlights" class="vt-box-container">
     <div class="vt-box text-center">
       <h2>Light and Simple</h2>
       <p>
-       Light weight, Simple and easy to use api and a built in spinner
+        Light weight, Simple and easy to use api and a built in spinner
       </p>
     </div>
     <div class="vt-box text-center">
       <h2>2-directions support</h2>
-      <p>
-        Support top and bottom directions
-      </p>
+      <p>Support top and bottom directions</p>
     </div>
     <div class="vt-box text-center">
       <h2>Result display</h2>
-      <p>
-        Fully configurable load result display
-      </p>
+      <p>Fully configurable load result display</p>
     </div>
   </section>
 </template>
