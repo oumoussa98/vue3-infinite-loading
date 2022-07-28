@@ -1,4 +1,3 @@
-
 import { defineConfigWithTheme } from 'vitepress'
 import baseConfig from '@vue/theme/config'
 import type { Config } from '@vue/theme'
@@ -9,7 +8,7 @@ const nav = [
     text: 'Docs',
     activeMatch: `^/(guide)/`,
     link: '/guide/introduction'
-  },
+  }
 ]
 
 export const sidebar = {
@@ -39,10 +38,10 @@ export const sidebar = {
         {
           text: 'Slots',
           link: '/guide/api/slots'
-        },
-      ],
-    },
-  ],
+        }
+      ]
+    }
+  ]
 }
 
 export default defineConfigWithTheme<Config>({
@@ -50,7 +49,8 @@ export default defineConfigWithTheme<Config>({
 
   lang: 'en-US',
   title: 'infinite scroll',
-  description: 'An infinite scroll component compatible with vue.js 3 and vite',
+  description:
+    'An infinite scroll component compatible with vue.js 3 and vite',
   srcDir: 'src',
   scrollOffset: 'header',
 
@@ -63,7 +63,7 @@ export default defineConfigWithTheme<Config>({
         name: 'twitter:image',
         content: 'https://vuejs.org/images/logo.png'
       }
-    ], 
+    ]
   ],
 
   themeConfig: {
@@ -85,14 +85,17 @@ export default defineConfigWithTheme<Config>({
     // },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/oumoussa98/vue3-infinite-loading' },
+      {
+        icon: 'github',
+        link: 'https://github.com/oumoussa98/vue3-infinite-loading'
+      }
     ],
 
     footer: {
       license: {
         text: 'MIT License',
         link: 'https://opensource.org/licenses/MIT'
-      },
+      }
     }
   },
 

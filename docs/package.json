@@ -1,4 +1,5 @@
 {
+  "name": "vu3-infinite-loading-docs",
   "scripts": {
     "dev": "vitepress",
     "build": "vitepress build",

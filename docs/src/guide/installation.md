@@ -13,14 +13,14 @@ npm install v3-infinite-loading
 ##### register globally
 
 ```js
-import InfiniteLoading from "v3-infinite-loading";
-import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
+import InfiniteLoading from 'v3-infinite-loading'
+import 'v3-infinite-loading/lib/style.css' //required if you're not going to override default slots
 
-const app = createApp(App);
+const app = createApp(App)
 
-app.component("infinite-loading", InfiniteLoading);
+app.component('infinite-loading', InfiniteLoading)
 
-app.mount("#app");
+app.mount('#app')
 ```
 
 ##### usage in SFC with script setup
