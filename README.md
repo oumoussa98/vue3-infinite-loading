@@ -1,3 +1,10 @@
+<h1 align="center"> vue 3 infinite loading </h1>
+<p align="center">
+  <a href="https://www.npmjs.com/package/v3-infinite-loading"><img src="https://img.shields.io/npm/dm/v3-infinite-loading.svg"></a>
+  <a href="https://www.npmjs.com/package/v3-infinite-loading"><img src="https://img.shields.io/npm/v/v3-infinite-loading.svg"></a>
+  <a href="https://www.npmjs.com/package/v3-infinite-loading"><img src="https://img.shields.io/npm/l/v3-infinite-loading.svg"></a>
+</p>
+
 ## Intro
 
 An infinite scroll component compatible with vue.js 3 and vite, to help you implement an infinite scroll list more easily.
