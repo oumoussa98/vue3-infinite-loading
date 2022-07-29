@@ -8,7 +8,6 @@ import {
   stateHandler,
   initEmitter,
   isVisible,
-  getScrollHeight,
 } from "../utils.js";
 
 const emit = defineEmits(["infinite"]);
@@ -38,12 +37,13 @@ const params = {
 
 const stateWatcher = () =>
   watch(state, async newVal => {
-    const parentEl = params.parentEl;
-    const prevHeight = getScrollHeight(parentEl);
+    const parentEl = params.parentEl || document.documentElement;
+    const prevHeight = parentEl.scrollHeight;
     await nextTick();
-    const currHeight = getScrollHeight(parentEl);
-    if (newVal == "loaded" && top) parentEl.scrollTop = currHeight - prevHeight;
-    if (newVal == "loaded" && isVisible(infiniteLoading.value, parentEl)) params.emit();
+    if (newVal == "loaded" && top)
+      parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
+    if (newVal == "loaded" && isVisible(infiniteLoading.value, params.parentEl))
+      params.emit();
     if (newVal == "complete") stopObserver();
   });
 

@@ -27,10 +27,6 @@ const isVisible = (el, view) => {
   return elRect.top >= viewRect.top && elRect.bottom <= viewRect.bottom;
 };
 
-const getScrollHeight = el => {
-  return el?.scrollHeight || document.documentElement.scrollHeight;
-};
-
 let observer;
 const startObserver = params => {
   params.parentEl = document.querySelector(params.target) || null;
@@ -53,11 +49,4 @@ const stopObserver = () => {
   observer.disconnect();
 };
 
-export {
-  startObserver,
-  stopObserver,
-  stateHandler,
-  initEmitter,
-  isVisible,
-  getScrollHeight,
-};
+export { startObserver, stopObserver, stateHandler, initEmitter, isVisible };
