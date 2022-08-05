@@ -49,6 +49,36 @@ usage in SFC with script setup:
 </template>
 ```
 
+## Browser usage
+
+```html
+<html>
+  <head>
+    <script src="https://unpkg.com/vue@3.2.37/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/v3-infinite-loading@1.2.1/lib/v3-infinite-loading.umd.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/v3-infinite-loading@1.2.1/lib/style.css"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <infinite-loading target="#app" @infinite="infiniteHandler"></infinite-loading>
+    </div>
+    <script>
+      const { ref, createApp } = Vue;
+      const app = createApp({
+        // your app
+      });
+      app.component("infinite-loading", V3InfiniteLoading.default);
+      app.mount("#app");
+    </script>
+  </body>
+</html>
+```
+
+### Checkout a full working example on [codepen](https://codepen.io/oumoussa98/pen/GRxNxBr) or [github gists](https://gist.github.com/oumoussa98/7184e74bab47d78a60a8bdf0aea68d96)
+
 ## Usage & Guide
 
 Documentation available on [v3-infinite-loading Netlify](https://vue3-infinite-loading.netlify.com/)
