@@ -27,12 +27,11 @@ const isVisible = (el, view) => {
   return elRect.top >= viewRect.top && elRect.bottom <= viewRect.bottom;
 };
 
-let observer;
 const startObserver = params => {
   params.parentEl = document.querySelector(params.target) || null;
   let rootMargin = `0px 0px ${params.distance}px 0px`;
   if (params.top) rootMargin = `${params.distance}px 0px 0px 0px`;
-  observer = new IntersectionObserver(
+  const observer = new IntersectionObserver(
     entries => {
       const entry = entries[0];
       if (entry.isIntersecting) {
@@ -43,10 +42,7 @@ const startObserver = params => {
     { root: params.parentEl, rootMargin }
   );
   observer.observe(params.infiniteLoading.value);
+  return observer;
 };
 
-const stopObserver = () => {
-  observer.disconnect();
-};
-
-export { startObserver, stopObserver, stateHandler, initEmitter, isVisible };
+export { startObserver, stateHandler, initEmitter, isVisible };
