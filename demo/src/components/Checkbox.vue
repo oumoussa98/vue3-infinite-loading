@@ -1,18 +1,24 @@
 <script setup>
-import { toRefs } from "vue";
-const props = defineProps({
+defineProps({
   label: { type: String, required: true },
   disabled: { type: Boolean, required: false },
   checked: { required: false },
 });
 const emit = defineEmits(["click"]);
-const { label } = toRefs(props);
 </script>
 <template>
-  <label class="wrapper flex items-center" :class="{ disabled: disabled }">
+  <label
+    class="wrapper flex items-center"
+    :class="{ disabled: disabled }"
+  >
     <slot />
-    <input @click="emit('click')" class="checkbox" type="checkbox" :checked="checked" />
-    <span class="checkmark"></span>
+    <input
+      class="checkbox"
+      type="checkbox"
+      :checked="checked"
+      @click="emit('click')"
+    >
+    <span class="checkmark" />
   </label>
 </template>
 

@@ -26,7 +26,7 @@
   },
   "scripts": {
     "lint": "eslint . --ext .js,.vue --ignore-path .gitignore --fix",
-    "format": "prettier .  --write",
+    "format": "prettier . --write",
     "dev:docs": "pnpm -C docs run dev",
     "dev:demo": "pnpm -C demo run dev",
     "serve:docs": "pnpm -C docs run serve",
