@@ -23,18 +23,19 @@
     "vite": "^3.0.2"
   },
   "workspaces": [
-    "demo"
+    "demo",
+    "docs"
   ],
   "scripts": {
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
+    "lint": "eslint . --ext .js,.vue --ignore-path .gitignore --fix",
     "format": "prettier .  --write",
     "dev:docs": "cd docs && npm run dev",
     "dev:demo": "cd demo && npm run dev",
     "serve:docs": "cd docs && npm run serve",
     "serve:demo": "cd demo && npm run serve",
-    "build:lib": "vite build --mode lib",
     "build:demo": "rm -rf ./demo/lib && npm run build:lib && mv lib demo && cd demo && npm run build",
-    "build:docs": "cd docs && npm run build"
+    "build:docs": "cd docs && npm run build",
+    "build:lib": "vite build --mode lib"
   },
   "keywords": [
     "vue3",

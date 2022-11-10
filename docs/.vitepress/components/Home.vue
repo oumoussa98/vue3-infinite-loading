@@ -36,16 +36,8 @@ const copyText = () => {
     <div class="actions">
       <a class="get-started" href="/guide/introduction.html">
         Get Started
-        <svg
-          class="icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="10"
-          height="10"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"
-          />
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24">
+          <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z" />
         </svg>
       </a>
       <div @click="copyText" class="install">
@@ -53,25 +45,12 @@ const copyText = () => {
         <svg width="16" height="19" xmlns="http://www.w3.org/2000/svg">
           <g>
             <title>Layer 1</title>
-            <path
-              fill="#666666"
-              stroke="null"
-              id="svg_1"
-              opacity="0.35"
-              d="m2.50926,14.0668l0,-11.0873c0,-1.53097 1.24085,-2.77183 2.77182,-2.77183l4.61971,0l5.54365,5.54365l0,8.31548c0,1.53097 -1.24085,2.77182 -2.77182,2.77182l-7.39154,0c-1.53097,0 -2.77182,-1.24085 -2.77182,-2.77182z"
-            />
-            <path
-              stroke="null"
-              fill="#666666"
-              id="svg_2"
-              d="m9.84788,3.95635l0,-3.69577l5.54365,5.54365l-3.69577,0c-1.02096,0 -1.84788,-0.82693 -1.84788,-1.84788z"
-            />
-            <path
-              stroke="null"
-              fill="#757575"
-              id="svg_3"
-              d="m5.22817,16.89153c-1.53097,0 -2.77183,-1.24085 -2.77183,-2.77183l0,-11.0873c-1.02096,0 -1.84788,0.82693 -1.84788,1.84788l0,11.0873c0,1.53097 1.24085,2.77183 2.77183,2.77183l7.39153,0c1.02096,0 1.84788,-0.82693 1.84788,-1.84788l-7.39153,0z"
-            />
+            <path fill="#666666" stroke="null" id="svg_1" opacity="0.35"
+              d="m2.50926,14.0668l0,-11.0873c0,-1.53097 1.24085,-2.77183 2.77182,-2.77183l4.61971,0l5.54365,5.54365l0,8.31548c0,1.53097 -1.24085,2.77182 -2.77182,2.77182l-7.39154,0c-1.53097,0 -2.77182,-1.24085 -2.77182,-2.77182z" />
+            <path stroke="null" fill="#666666" id="svg_2"
+              d="m9.84788,3.95635l0,-3.69577l5.54365,5.54365l-3.69577,0c-1.02096,0 -1.84788,-0.82693 -1.84788,-1.84788z" />
+            <path stroke="null" fill="#757575" id="svg_3"
+              d="m5.22817,16.89153c-1.53097,0 -2.77183,-1.24085 -2.77183,-2.77183l0,-11.0873c-1.02096,0 -1.84788,0.82693 -1.84788,1.84788l0,11.0873c0,1.53097 1.24085,2.77183 2.77183,2.77183l7.39153,0c1.02096,0 1.84788,-0.82693 1.84788,-1.84788l-7.39153,0z" />
           </g>
         </svg>
       </div>
@@ -131,6 +110,12 @@ html:not(.dark) .accent,
   font-size: 22px;
   margin: 24px auto 40px;
 }
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
 
 .actions a {
   font-size: 16px;
@@ -144,9 +129,9 @@ html:not(.dark) .accent,
 
 .actions .get-started {
   font-weight: 600;
-  background-color: var(--vt-c-green);
-  color: #fff;
-  margin-right: 18px;
+  background-color: #42b883;
+  color: #213547;
+  transition-duration: 0.2s;
 }
 
 .actions .icon {
@@ -158,35 +143,21 @@ html:not(.dark) .accent,
   transition: transform 0.2s;
 }
 
-.dark .actions .get-started {
-  color: var(--vt-c-indigo);
-}
-
-.actions .get-started:hover {
-  background-color: var(--vt-c-green-dark);
-  transition-duration: 0.2s;
-}
-
 .actions .get-started:hover .icon {
   transform: translateX(2px);
 }
-
-.dark .actions .get-started:hover {
-  background-color: var(--vt-c-green-light);
-}
-
-.actions .setup {
-  color: var(--vt-c-text-code);
+.actions .get-started:hover {
+  background-color: #42d392;
 }
 
 .actions .install {
   width: 254px;
-  color: var(--vt-c-text-code);
+  color: #aac8e4;
   font-size: 16px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--vt-c-bg-mute);
+  background-color: #2f2f2f;
   padding: 8px 18px;
   font-weight: 500;
   border-radius: 8px;
@@ -198,26 +169,19 @@ html:not(.dark) .accent,
   margin-left: 8px;
 }
 
-.actions .setup:hover {
-  background-color: var(--vt-c-gray-light-4);
-  transition-duration: 0.2s;
-}
-
-.dark .actions .setup:hover {
-  background-color: var(--vt-c-gray-dark-3);
-}
-
 #highlights {
   max-width: 960px;
   margin: 0px auto;
-  color: var(--vt-c-text-2);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 #highlights h2 {
   font-weight: 600;
   font-size: 20px;
   letter-spacing: -0.4px;
-  color: var(--vt-c-text-1);
   transition: color 0.5s;
   margin-bottom: 0.75em;
 }
@@ -225,11 +189,18 @@ html:not(.dark) .accent,
 #highlights p {
   font-weight: 400;
   font-size: 15px;
+  max-width: 200px;
+  color: rgba(60, 60, 60, .7);
+}
+
+.dark #highlights p {
+  color: rgba(235, 235, 235, .6);
 }
 
 #highlights .vt-box {
   background-color: transparent;
 }
+
 .text-center {
   text-align: center;
 }
@@ -239,6 +210,7 @@ html:not(.dark) .accent,
     font-size: 64px;
     letter-spacing: -0.5px;
   }
+
   .description {
     font-size: 18px;
     margin-bottom: 48px;
@@ -256,13 +228,16 @@ html:not(.dark) .accent,
   #hero {
     padding: 64px 32px;
   }
+
   .description {
     font-size: 16px;
     margin: 18px 0 30px;
   }
+
   #highlights h3 {
     margin-bottom: 0.6em;
   }
+
   #highlights .vt-box {
     padding: 20px 36px;
   }
