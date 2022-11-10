@@ -183,6 +183,7 @@ body {
   font-family: system-ui, -apple-system;
   font-weight: 400;
   font-size: 15px;
+  overflow-y: scroll;
 }
 
 #app {
