@@ -19,22 +19,20 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-vue": "^7.18.0",
+    "pnpm": "^7.15.0",
     "prettier": "2.4.1",
-    "vite": "^3.0.2"
+    "vite": "^3.0.2",
+    "vue": "^3.2.44"
   },
-  "workspaces": [
-    "demo",
-    "docs"
-  ],
   "scripts": {
     "lint": "eslint . --ext .js,.vue --ignore-path .gitignore --fix",
     "format": "prettier .  --write",
-    "dev:docs": "cd docs && npm run dev",
-    "dev:demo": "cd demo && npm run dev",
-    "serve:docs": "cd docs && npm run serve",
-    "serve:demo": "cd demo && npm run serve",
-    "build:demo": "rm -rf ./demo/lib && npm run build:lib && mv lib demo && cd demo && npm run build",
-    "build:docs": "cd docs && npm run build",
+    "dev:docs": "pnpm -C docs run dev",
+    "dev:demo": "pnpm -C demo run dev",
+    "serve:docs": "pnpm -C docs run serve",
+    "serve:demo": "pnpm -C demo run serve",
+    "build:demo": "rm -rf ./demo/lib && pnpm run build:lib && mv lib demo && pnpm -C demo run build",
+    "build:docs": "pnpm -C docs run build",
     "build:lib": "vite build --mode lib"
   },
   "keywords": [
