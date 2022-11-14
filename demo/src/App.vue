@@ -3,6 +3,11 @@ import { ref, nextTick } from "vue";
 import Top from "./components/Top.vue";
 import Bottom from "./components/Bottom.vue";
 import Checkbox from "./components/Checkbox.vue";
+import ScopedLoader from "./components/ScopedLoader.vue";
+
+const counts = [20, 50, 100, 120, 150, 200, 250, 300, 350, 400, 450, 500];
+const showLoaders = ref(false);
+const displayMessage = ref("Display");
 let page = 0;
 let mount = ref(true);
 let resetData = ref(false);
@@ -11,6 +16,11 @@ let distance = ref(0);
 let top = ref(false);
 let comments = ref([]);
 let mountname = ref("Unmount");
+
+const displayMultipleLoader = () => {
+  showLoaders.value = !showLoaders.value;
+  displayMessage.value = showLoaders.value ? "Hide" : "Display";
+};
 const refresh = () => {
   page = 0;
   comments.value.length = 0;
@@ -113,7 +123,7 @@ const load = async $state => {
     </span>
     <span class="buttons">
       <button
-        class="btn-mount"
+        class="btn btn-mount"
         @click="mountToggler"
       >{{ mountname }}</button>
       <button
@@ -121,7 +131,7 @@ const load = async $state => {
         @click="refresh"
       >Refresh</button>
       <button
-        class="btn-reset"
+        class="btn btn-reset"
         @click="reset"
       >Reset</button>
     </span>
@@ -144,18 +154,37 @@ const load = async $state => {
       @infinite="load"
     />
   </div>
+  <button
+    class="btn btn-show-loaders"
+    @click="displayMultipleLoader"
+  >
+    {{ displayMessage }} multiple infinites
+  </button>
+  <div
+    v-if="showLoaders"
+    class="loaders"
+  >
+    <ScopedLoader
+      v-for="i in counts"
+      :key="i"
+      :count="i"
+      class="results"
+    />
+  </div>
 </template>
 
 <style>
 * {
   box-sizing: border-box;
 }
+
 body {
   background-color: #272727;
   font-family: system-ui, -apple-system;
   font-weight: 400;
   font-size: 15px;
 }
+
 #app {
   color: #e9e9e9;
   max-width: 1500px;
@@ -168,6 +197,7 @@ body {
   gap: 10px;
   text-align: center;
 }
+
 .settings {
   position: relative;
   display: flex;
@@ -184,16 +214,19 @@ body {
   border-radius: 10px;
   padding: 10px;
 }
+
 .settings a {
   position: absolute;
   top: 4px;
   right: 5px;
 }
+
 .props {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
 }
+
 .distance {
   width: 50px;
   border-radius: 5px;
@@ -203,11 +236,13 @@ body {
   background: #6a6c6d;
   color: inherit;
 }
+
 .buttons {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
 }
+
 .btn-refresh {
   width: 100px;
   font-family: inherit;
@@ -220,8 +255,8 @@ body {
   text-decoration: none;
   outline: none;
 }
-.btn-reset,
-.btn-mount {
+
+.btn {
   width: 90px;
   font-family: inherit;
   color: white;
@@ -232,12 +267,21 @@ body {
   text-decoration: none;
   outline: none;
 }
+
 .btn-reset {
   background: #e45252;
 }
+
 .btn-mount {
   background: #5268e4;
 }
+
+.btn-show-loaders {
+  background: #5268e4;
+  width: 180px;
+  height: 30px;
+}
+
 .result {
   display: flex;
   flex-direction: column;
@@ -252,19 +296,37 @@ body {
   background: #101011;
   border-radius: 10px;
 }
+
 .loader {
   padding: 10px;
 }
-.results::-webkit-scrollbar-track {
+
+.loaders {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.loaders > .results {
+  width: 300px;
+  height: 300px;
+  background: #333536;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar-track {
   border-radius: 4px;
   background: #333536;
 }
-.results::-webkit-scrollbar {
+
+::-webkit-scrollbar {
   border-radius: 4px;
   width: 8px;
   background: #7e7e7e;
 }
-.results::-webkit-scrollbar-thumb {
+
+::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background: #7e7e7e;
 }
