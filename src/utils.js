@@ -13,8 +13,10 @@ const stateHandler = state => ({
   },
 });
 
-const initEmitter = (emit, stateHandler) => {
+const initEmitter = (emit, stateHandler, params) => {
   return () => {
+    const parentEl = params.parentEl || document.documentElement
+    params.prevHeight = parentEl.scrollHeight;
     stateHandler.loading();
     emit("infinite", stateHandler);
   };

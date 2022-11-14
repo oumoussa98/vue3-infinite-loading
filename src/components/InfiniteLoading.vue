@@ -31,17 +31,17 @@ const params = {
   top,
   firstload,
   distance,
-  emit: initEmitter(emit, stateHandler(state)),
+  prevHeight: 0,
   parentEl: null,
 };
+params.emit = initEmitter(emit, stateHandler(state), params);
 
 const stateWatcher = () =>
   watch(state, async newVal => {
     const parentEl = params.parentEl || document.documentElement;
-    const prevHeight = parentEl.scrollHeight;
     await nextTick();
     if (newVal == "loaded" && top)
-      parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
+      parentEl.scrollTop = parentEl.scrollHeight - params.prevHeight;
     if (newVal == "loaded" && isVisible(infiniteLoading.value, params.parentEl))
       params.emit();
     if (newVal == "complete") observer.disconnect();
@@ -67,16 +67,31 @@ onUnmounted(() => {
 
 <template>
   <div ref="infiniteLoading">
-    <slot v-if="state == 'loading'" name="spinner">
+    <slot
+      v-if="state == 'loading'"
+      name="spinner"
+    >
       <Spinner />
     </slot>
-    <slot v-if="state == 'complete'" name="complete">
+    <slot
+      v-if="state == 'complete'"
+      name="complete"
+    >
       <span> {{ slots?.complete || "No more results!" }} </span>
     </slot>
-    <slot v-if="state == 'error'" name="error" :retry="params.emit">
+    <slot
+      v-if="state == 'error'"
+      name="error"
+      :retry="params.emit"
+    >
       <span class="state-error">
         <span>{{ slots?.error || "Oops something went wrong!" }}</span>
-        <button class="retry" @click="params.emit">retry</button>
+        <button
+          class="retry"
+          @click="params.emit"
+        >
+          retry
+        </button>
       </span>
     </slot>
   </div>
