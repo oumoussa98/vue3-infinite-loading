@@ -31,31 +31,30 @@ We're using [{JSON} Placeholder API](https://jsonplaceholder.typicode.com/) to g
 
 ```html
 <script setup>
-  import { ref } from 'vue'
-  import InfiniteLoading from 'v3-infinite-loading'
-  import 'v3-infinite-loading/lib/style.css'
+  import { ref } from "vue";
+  import InfiniteLoading from "v3-infinite-loading";
+  import "v3-infinite-loading/lib/style.css";
 
-  let comments = ref([])
-  let page = 1
-  const load = async ($state) => {
-    console.log('loading...')
+  let comments = ref([]);
+  let page = 1;
+  const load = async $state => {
+    console.log("loading...");
 
     try {
       const response = await fetch(
-        'https://jsonplaceholder.typicode.com/comments?_limit=10&_page=' +
-          page
-      )
-      const json = await response.json()
-      if (json.length < 10) $state.complete()
+        "https://jsonplaceholder.typicode.com/comments?_limit=10&_page=" + page
+      );
+      const json = await response.json();
+      if (json.length < 10) $state.complete();
       else {
-        comments.value.push(...json)
-        $state.loaded()
+        comments.value.push(...json);
+        $state.loaded();
       }
-      page++
+      page++;
     } catch (error) {
-      $state.error()
+      $state.error();
     }
-  }
+  };
 </script>
 ```
 
