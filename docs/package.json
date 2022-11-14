@@ -1,27 +1,17 @@
 {
-  "name": "vu3-infinite-loading-docs",
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "dev": "vitepress",
+    "dev": "vitepress dev",
     "build": "vitepress build",
     "serve": "vitepress serve"
   },
-  "dependencies": {
-    "@vue/theme": "^1.0.0",
-    "vitepress": "^0.21.6",
-    "vue": "^3.2.28"
-  },
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "@types/markdown-it": "^12.2.3",
-    "@types/node": "^16.9.1"
-  },
-  "pnpm": {
-    "peerDependencyRules": {
-      "ignoreMissing": [
-        "@algolia/client-search",
-        "react",
-        "react-dom",
-        "@types/react"
-      ]
-    }
+    "vitepress": "^1.0.0-alpha.28",
+    "vue": "^3.2.43"
   }
 }
