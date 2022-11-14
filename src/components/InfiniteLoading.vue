@@ -4,7 +4,6 @@ import { onMounted, ref, toRefs, onUnmounted, watch, nextTick } from "vue";
 
 import {
   startObserver,
-  stopObserver,
   stateHandler,
   initEmitter,
   isVisible,
@@ -20,6 +19,7 @@ const props = defineProps({
   slots: { type: Object, required: false },
 });
 
+let observer = null;
 const infiniteLoading = ref(null);
 const state = ref("ready");
 const { top, firstload, target, distance } = props;
@@ -44,24 +44,24 @@ const stateWatcher = () =>
       parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
     if (newVal == "loaded" && isVisible(infiniteLoading.value, params.parentEl))
       params.emit();
-    if (newVal == "complete") stopObserver();
+    if (newVal == "complete") observer.disconnect();
   });
 
 const identifierWatcher = () =>
   watch(identifier, () => {
     state.value = "ready";
-    stopObserver();
-    startObserver(params);
+    observer.disconnect();
+    observer = startObserver(params);
   });
 
 onMounted(() => {
-  startObserver(params);
+  observer = startObserver(params);
   stateWatcher();
   if (identifier) identifierWatcher();
 });
 
 onUnmounted(() => {
-  stopObserver();
+  observer.disconnect();
 });
 </script>
 
