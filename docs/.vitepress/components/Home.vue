@@ -1,24 +1,24 @@
 <script setup>
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
-const displayHint = async (text) => {
-  const el = document.querySelector('div.install .inner-text')
-  el.innerText = text
-  el.parentElement.style.color = '#00c96f'
-  await sleep(1500)
-  el.parentElement.style.color = '#aac8e4'
-  el.innerText = 'npm i v3-infinite-loading'
-}
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const displayHint = async text => {
+  const el = document.querySelector("div.install .inner-text");
+  el.innerText = text;
+  el.parentElement.style.color = "#00c96f";
+  await sleep(1500);
+  el.parentElement.style.color = "#aac8e4";
+  el.innerText = "npm i v3-infinite-loading";
+};
 
 const copyText = () => {
   navigator.clipboard
-    .writeText('npm i v3-infinite-loading')
+    .writeText("npm i v3-infinite-loading")
     .then(() => {
-      displayHint('Copied to clipboard')
+      displayHint("Copied to clipboard");
     })
     .catch(() => {
-      displayHint('Failed to copy 😞')
-    })
-}
+      displayHint("Failed to copy 😞");
+    });
+};
 </script>
 
 <template>
@@ -36,8 +36,16 @@ const copyText = () => {
     <div class="actions">
       <a class="get-started" href="/guide/introduction.html">
         Get Started
-        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24">
-          <path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z" />
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="10"
+          height="10"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z"
+          />
         </svg>
       </a>
       <div @click="copyText" class="install">
@@ -45,12 +53,25 @@ const copyText = () => {
         <svg width="16" height="19" xmlns="http://www.w3.org/2000/svg">
           <g>
             <title>Layer 1</title>
-            <path fill="#666666" stroke="null" id="svg_1" opacity="0.35"
-              d="m2.50926,14.0668l0,-11.0873c0,-1.53097 1.24085,-2.77183 2.77182,-2.77183l4.61971,0l5.54365,5.54365l0,8.31548c0,1.53097 -1.24085,2.77182 -2.77182,2.77182l-7.39154,0c-1.53097,0 -2.77182,-1.24085 -2.77182,-2.77182z" />
-            <path stroke="null" fill="#666666" id="svg_2"
-              d="m9.84788,3.95635l0,-3.69577l5.54365,5.54365l-3.69577,0c-1.02096,0 -1.84788,-0.82693 -1.84788,-1.84788z" />
-            <path stroke="null" fill="#757575" id="svg_3"
-              d="m5.22817,16.89153c-1.53097,0 -2.77183,-1.24085 -2.77183,-2.77183l0,-11.0873c-1.02096,0 -1.84788,0.82693 -1.84788,1.84788l0,11.0873c0,1.53097 1.24085,2.77183 2.77183,2.77183l7.39153,0c1.02096,0 1.84788,-0.82693 1.84788,-1.84788l-7.39153,0z" />
+            <path
+              fill="#666666"
+              stroke="null"
+              id="svg_1"
+              opacity="0.35"
+              d="m2.50926,14.0668l0,-11.0873c0,-1.53097 1.24085,-2.77183 2.77182,-2.77183l4.61971,0l5.54365,5.54365l0,8.31548c0,1.53097 -1.24085,2.77182 -2.77182,2.77182l-7.39154,0c-1.53097,0 -2.77182,-1.24085 -2.77182,-2.77182z"
+            />
+            <path
+              stroke="null"
+              fill="#666666"
+              id="svg_2"
+              d="m9.84788,3.95635l0,-3.69577l5.54365,5.54365l-3.69577,0c-1.02096,0 -1.84788,-0.82693 -1.84788,-1.84788z"
+            />
+            <path
+              stroke="null"
+              fill="#757575"
+              id="svg_3"
+              d="m5.22817,16.89153c-1.53097,0 -2.77183,-1.24085 -2.77183,-2.77183l0,-11.0873c-1.02096,0 -1.84788,0.82693 -1.84788,1.84788l0,11.0873c0,1.53097 1.24085,2.77183 2.77183,2.77183l7.39153,0c1.02096,0 1.84788,-0.82693 1.84788,-1.84788l-7.39153,0z"
+            />
           </g>
         </svg>
       </div>
@@ -60,9 +81,7 @@ const copyText = () => {
   <section id="highlights" class="vt-box-container">
     <div class="vt-box text-center">
       <h2>Light and Simple</h2>
-      <p>
-        Light weight, Simple and easy to use api and a built in spinner
-      </p>
+      <p>Light weight, Simple and easy to use api and a built in spinner</p>
     </div>
     <div class="vt-box text-center">
       <h2>2-directions support</h2>
@@ -190,11 +209,11 @@ html:not(.dark) .accent,
   font-weight: 400;
   font-size: 15px;
   max-width: 200px;
-  color: rgba(60, 60, 60, .7);
+  color: rgba(60, 60, 60, 0.7);
 }
 
 .dark #highlights p {
-  color: rgba(235, 235, 235, .6);
+  color: rgba(235, 235, 235, 0.6);
 }
 
 #highlights .vt-box {

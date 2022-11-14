@@ -80,29 +80,50 @@ const load = async $state => {
       target="_blank"
       href="https://github.com/oumoussa98/vue3-infinite-loading/tree/main/example"
     >
-      <img src="./assets/github.svg" alt="github icon" />
+      <img
+        src="./assets/github.svg"
+        alt="github icon"
+      >
     </a>
     <span class="props">
-      <Checkbox :checked="top" :disabled="!target" label="top" @click="topToggler">
+      <Checkbox
+        :checked="top"
+        :disabled="!target"
+        label="top"
+        @click="topToggler"
+      >
         Top
       </Checkbox>
-      <Checkbox :checked="target" label="target" @click="targetToggler">
+      <Checkbox
+        :checked="target"
+        label="target"
+        @click="targetToggler"
+      >
         Target
       </Checkbox>
       <div>
         Distance:
         <input
-          @change="distanceHandler"
-          class="distance"
           v-model.number.lazy="distance"
+          class="distance"
           type="text"
-        />
+          @change="distanceHandler"
+        >
       </div>
     </span>
     <span class="buttons">
-      <button class="btn-mount" @click="mountToggler">{{ mountname }}</button>
-      <button class="btn-refresh" @click="refresh">Refresh</button>
-      <button class="btn-reset" @click="reset">Reset</button>
+      <button
+        class="btn-mount"
+        @click="mountToggler"
+      >{{ mountname }}</button>
+      <button
+        class="btn-refresh"
+        @click="refresh"
+      >Refresh</button>
+      <button
+        class="btn-reset"
+        @click="reset"
+      >Reset</button>
     </span>
   </div>
   <div v-if="mount">

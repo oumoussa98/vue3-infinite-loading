@@ -7,9 +7,9 @@ const app = createApp(App);
 
 if (import.meta.env.MODE === "production") {
   const modules = import.meta.glob("../lib/v3-infinite-loading.mjs", { eager: true });
-  import.meta.glob("../lib/style.css", { eager: true })
+  import.meta.glob("../lib/style.css", { eager: true });
   const InfiniteLoadingProd = modules["../lib/v3-infinite-loading.mjs"].default;
-  app.component("infinite-loading", InfiniteLoadingProd);
-} else app.component("infinite-loading", InfiniteLoading);
+  app.component("InfiniteLoading", InfiniteLoadingProd);
+} else app.component("InfiniteLoading", InfiniteLoading);
 
 app.mount("#app");
