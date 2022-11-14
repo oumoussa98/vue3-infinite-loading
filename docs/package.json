@@ -13,5 +13,15 @@
   "devDependencies": {
     "vitepress": "^1.0.0-alpha.28",
     "vue": "^3.2.43"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@algolia/client-search",
+        "react",
+        "react-dom",
+        "@types/react"
+      ]
+    }
   }
 }
