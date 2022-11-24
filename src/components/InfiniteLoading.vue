@@ -71,20 +71,23 @@ onUnmounted(() => {
       v-if="state == 'loading'"
       name="spinner"
     >
-      <Spinner />
+      <template v-if="slots && !slots.spinner"></template>
+      <Spinner v-else />
     </slot>
     <slot
       v-if="state == 'complete'"
       name="complete"
     >
-      <span> {{ slots?.complete || "No more results!" }} </span>
+      <template v-if="slots && !slots.complete"></template>
+      <span v-else> {{ slots?.complete || "No more results!" }} </span>
     </slot>
     <slot
       v-if="state == 'error'"
       name="error"
       :retry="params.emit"
     >
-      <span class="state-error">
+      <template v-if="slots && !slots.error"></template>
+      <span class="state-error" v-else>
         <span>{{ slots?.error || "Oops something went wrong!" }}</span>
         <button
           class="retry"
