@@ -71,14 +71,14 @@ onUnmounted(() => {
       v-if="state == 'loading'"
       name="spinner"
     >
-      <template v-if="slots && !slots.spinner"></template>
+      <template v-if="slots && slots.hasOwnProperty('spinner') && !slots.spinner"></template>
       <Spinner v-else />
     </slot>
     <slot
       v-if="state == 'complete'"
       name="complete"
     >
-      <template v-if="slots && !slots.complete"></template>
+      <template v-if="slots && slots.hasOwnProperty('complete') && !slots.complete"></template>
       <span v-else> {{ slots?.complete || "No more results!" }} </span>
     </slot>
     <slot
@@ -86,7 +86,7 @@ onUnmounted(() => {
       name="error"
       :retry="params.emit"
     >
-      <template v-if="slots && !slots.error"></template>
+      <template v-if="slots && slots.hasOwnProperty('error') && !slots.error"></template>
       <span class="state-error" v-else>
         <span>{{ slots?.error || "Oops something went wrong!" }}</span>
         <button
