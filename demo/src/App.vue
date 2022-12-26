@@ -88,7 +88,7 @@ const load = async $state => {
   <div class="settings">
     <a
       target="_blank"
-      href="https://github.com/oumoussa98/vue3-infinite-loading/tree/main/example"
+      href="https://github.com/oumoussa98/vue3-infinite-loading/tree/main/demo"
     >
       <img
         src="./assets/github.svg"
