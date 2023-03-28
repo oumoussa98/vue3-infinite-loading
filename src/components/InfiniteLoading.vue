@@ -53,6 +53,16 @@ const identifierWatcher = () =>
     observer.disconnect();
     observer = startObserver(params);
   });
+  
+/** 
+ * Enable setting the state manually from outside the component,
+ * e.g. if "complete" has been called and new items are added to the list.
+ */
+function setState(state) {
+  if (["ready", "loading", "complete", "error"].includes(state)) {
+    state.value = state
+  }
+}
 
 onMounted(() => {
   observer = startObserver(params);
@@ -63,6 +73,10 @@ onMounted(() => {
 onUnmounted(() => {
   observer.disconnect();
 });
+
+defineExpose({
+  setState,
+})
 </script>
 
 <template>
