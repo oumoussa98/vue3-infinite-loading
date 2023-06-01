@@ -2,7 +2,7 @@
 
 ## target
 
-- **Type**: `String`
+- **Type**: `String | HTMLElement`
 - **Default**: `window`
 - **Details**:
   This property is used to specify the scrollable element, it can be any valid css selector
@@ -11,7 +11,7 @@
 ## distance
 
 - **Type**: `Number`
-- **Default**: `0`
+- **Default**: `100`
 - **Details**:
   The `infinite` event will be fired if the scroll distance is less than this value.
 
