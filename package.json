@@ -1,28 +1,36 @@
 {
   "name": "v3-infinite-loading",
   "version": "1.2.2",
+  "type": "module",
   "description": "Infinite scroller component for vuejs-3",
   "homepage": "https://vue3-infinite-loading.netlify.app/",
   "repository": {
     "type": "git",
     "url": "https://github.com/oumoussa98/vue3-infinite-loading.git"
   },
-  "main": "lib/v3-infinite-loading.mjs",
-  "browser": "lib/v3-infinite-loading.umd.js",
-  "module": "lib/v3-infinite-loading.mjs",
+  "main": "lib/v3-infinite-loading.js",
+  "browser": "lib/v3-infinite-loading.umd.cjs",
+  "module": "lib/v3-infinite-loading.js",
+  "types": "lib/main.d.ts",
   "files": [
     "lib"
   ],
   "devDependencies": {
+    "@types/node": "^20.2.5",
     "@vitejs/plugin-vue": "^3.2.0",
     "@vue/compiler-sfc": "^3.2.19",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "@vue/eslint-config-typescript": "^11.0.3",
+    "@vue/tsconfig": "^0.4.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-vue": "^7.18.0",
+    "path": "^0.12.7",
     "pnpm": "^7.15.0",
     "prettier": "2.4.1",
     "vite": "^3.0.2",
-    "vue": "^3.2.44"
+    "vite-plugin-dts": "^2.3.0",
+    "vue": "^3.3.4"
   },
   "scripts": {
     "lint": "eslint . --ext .js,.vue --ignore-path .gitignore --fix",
