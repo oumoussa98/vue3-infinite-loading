@@ -11,7 +11,7 @@
 ## distance
 
 - **Type**: `Number`
-- **Default**: `100`
+- **Default**: `0`
 - **Details**:
   The `infinite` event will be fired if the scroll distance is less than this value.
 
