@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { Props, Params, State, StateHandler } from "../types";
+import type { Props, Params, State, StateHandler } from "@root/types";
 import { onMounted, ref, toRefs, onUnmounted, watch, nextTick } from "vue";
-import { startObserver, getParentEl, isVisible } from "../utils";
+import { startObserver, getParentEl, isVisible } from "@root/utils";
 // @ts-ignore
 import Spinner from "./Spinner.vue";
 

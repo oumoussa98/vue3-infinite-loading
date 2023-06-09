@@ -6,7 +6,7 @@
     "declaration": true,
     "outDir": "lib",
     "declarationDir": "lib",
-    "paths": { "@/*": ["./src/*"] },
+    "paths": { "@root/*": ["./src/*"] },
     "baseUrl": "."
   }
 }

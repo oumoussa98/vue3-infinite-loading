@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 
-import InfiniteLoading from "../../src/components/InfiniteLoading.vue";
+import InfiniteLoading from "@root/components/InfiniteLoading.vue";
 
 const app = createApp(App);
 

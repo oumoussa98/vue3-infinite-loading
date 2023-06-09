@@ -1,4 +1,5 @@
-import path from "path";
+import { fileURLToPath, URL } from "node:url";
+import path from "node:path";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
@@ -26,6 +27,11 @@ export default defineConfig({
       entry: path.resolve(__dirname, "src/components/InfiniteLoading.vue"),
       name: "V3InfiniteLoading",
       formats: ["es", "umd"],
+    },
+  },
+  resolve: {
+    alias: {
+      "@root": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
 });
