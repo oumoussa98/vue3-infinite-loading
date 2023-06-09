@@ -9,7 +9,7 @@ const emit = defineEmits<{ infinite: [$state: StateHandler] }>();
 const props = withDefaults(defineProps<Props>(), {
   top: false,
   firstload: true,
-  distance: 100,
+  distance: 0,
 });
 defineSlots<{
   spinner(props: {}): any;
@@ -74,7 +74,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="infiniteLoading">
+  <div ref="infiniteLoading" style="min-height: 1px">
     <div v-show="state == 'loading'">
       <slot name="spinner">
         <Spinner />
