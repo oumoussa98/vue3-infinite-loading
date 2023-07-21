@@ -7,9 +7,17 @@ defineProps({
 const emit = defineEmits(["click"]);
 </script>
 <template>
-  <label class="wrapper flex items-center" :class="{ disabled: disabled }">
+  <label
+    class="wrapper flex items-center"
+    :class="{ disabled: disabled }"
+  >
     <slot />
-    <input class="checkbox" type="checkbox" :checked="checked" @click="emit('click')" />
+    <input
+      class="checkbox"
+      type="checkbox"
+      :checked="checked"
+      @click="emit('click')"
+    >
     <span class="checkmark" />
   </label>
 </template>
