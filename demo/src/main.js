@@ -6,9 +6,9 @@ import InfiniteLoading from "@root/components/InfiniteLoading.vue";
 const app = createApp(App);
 
 if (import.meta.env.MODE === "production") {
-  const modules = import.meta.glob("../lib/v3-infinite-loading.js", { eager: true });
+  const modules = import.meta.glob("../lib/v3-infinite-loading.es.js", { eager: true });
   import.meta.glob("../lib/style.css", { eager: true });
-  const InfiniteLoadingProd = modules["../lib/v3-infinite-loading.js"].default;
+  const InfiniteLoadingProd = modules["../lib/v3-infinite-loading.es.js"].default;
   app.component("InfiniteLoading", InfiniteLoadingProd);
 } else app.component("InfiniteLoading", InfiniteLoading);
 

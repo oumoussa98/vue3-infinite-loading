@@ -26,6 +26,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, "src/components/InfiniteLoading.vue"),
       name: "V3InfiniteLoading",
+      fileName: format => `v3-infinite-loading.${format}.js`,
       formats: ["es", "umd"],
     },
   },
