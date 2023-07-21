@@ -2,7 +2,7 @@
 
 ## target
 
-- **Type**: `String`
+- **Type**: `String | HTMLElement`
 - **Default**: `window`
 - **Details**:
   This property is used to specify the scrollable element, it can be any valid css selector

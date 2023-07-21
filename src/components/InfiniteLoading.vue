@@ -1,97 +1,92 @@
-<script setup>
-import Spinner from "./Spinner.vue";
+<script lang="ts" setup>
+import type { Props, Params, State, StateHandler } from "@root/types";
 import { onMounted, ref, toRefs, onUnmounted, watch, nextTick } from "vue";
+import { startObserver, getParentEl, isVisible } from "@root/utils";
+// @ts-ignore
+import Spinner from "./Spinner.vue";
 
-import {
-  startObserver,
-  stateHandler,
-  initEmitter,
-  isVisible,
-} from "../utils.js";
-
-const emit = defineEmits(["infinite"]);
-const props = defineProps({
-  top: { type: Boolean, required: false },
-  target: { type: [String, Boolean], required: false },
-  distance: { type: Number, required: false, default: 0 },
-  identifier: { required: false },
-  firstload: { type: Boolean, required: false, default: true },
-  slots: { type: Object, required: false },
+const emit = defineEmits<{ infinite: [$state: StateHandler] }>();
+const props = withDefaults(defineProps<Props>(), {
+  top: false,
+  firstload: true,
+  distance: 0,
 });
+defineSlots<{
+  spinner(props: {}): any;
+  complete(props: {}): any;
+  error(props: { retry(): void }): any;
+}>();
 
-let observer = null;
+let observer: IntersectionObserver | null = null;
+let prevHeight = 0;
 const infiniteLoading = ref(null);
-const state = ref("ready");
-const { top, firstload, target, distance } = props;
-const { identifier } = toRefs(props);
+const state = ref<State>("");
+const { top, firstload, distance } = props;
+const { identifier, target } = toRefs(props);
 
-const params = {
+const params: Params = {
   infiniteLoading,
-  target,
   top,
   firstload,
   distance,
-  prevHeight: 0,
   parentEl: null,
+  emit() {
+    const parentEl = params.parentEl || document.documentElement;
+    prevHeight = parentEl.scrollHeight;
+    stateHandler.loading();
+    emit("infinite", stateHandler);
+  },
 };
-params.emit = initEmitter(emit, stateHandler(state), params);
 
-const stateWatcher = () =>
-  watch(state, async newVal => {
+const stateHandler: StateHandler = {
+  loading() {
+    state.value = "loading";
+  },
+  async loaded() {
+    state.value = "loaded";
     const parentEl = params.parentEl || document.documentElement;
     await nextTick();
-    if (newVal == "loaded" && top)
-      parentEl.scrollTop = parentEl.scrollHeight - params.prevHeight;
-    if (newVal == "loaded" && isVisible(infiniteLoading.value, params.parentEl))
-      params.emit();
-    if (newVal == "complete") observer.disconnect();
-  });
+    if (top) parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
+    if (isVisible(infiniteLoading.value!, params.parentEl)) params.emit();
+  },
+  complete() {
+    state.value = "complete";
+    observer?.disconnect();
+  },
+  error() {
+    state.value = "error";
+  },
+};
 
-const identifierWatcher = () =>
-  watch(identifier, () => {
-    state.value = "ready";
-    observer.disconnect();
-    observer = startObserver(params);
-  });
-
-onMounted(() => {
+watch(identifier, () => {
+  observer?.disconnect();
   observer = startObserver(params);
-  stateWatcher();
-  if (identifier) identifierWatcher();
+});
+
+onMounted(async () => {
+  params.parentEl = await getParentEl(target!);
+  observer = startObserver(params);
 });
 
 onUnmounted(() => {
-  observer.disconnect();
+  observer?.disconnect();
 });
 </script>
 
 <template>
-  <div ref="infiniteLoading">
-    <slot
-      v-if="state == 'loading'"
-      name="spinner"
-    >
-      <Spinner />
-    </slot>
-    <slot
-      v-if="state == 'complete'"
-      name="complete"
-    >
+  <div ref="infiniteLoading" style="min-height: 1px">
+    <div v-show="state == 'loading'">
+      <slot name="spinner">
+        <Spinner />
+      </slot>
+    </div>
+    <slot v-if="state == 'complete'" name="complete">
       <span> {{ slots?.complete || "No more results!" }} </span>
     </slot>
-    <slot
-      v-if="state == 'error'"
-      name="error"
-      :retry="params.emit"
-    >
+    <slot v-if="state == 'error'" name="error" :retry="params.emit">
       <span class="state-error">
         <span>{{ slots?.error || "Oops something went wrong!" }}</span>
-        <button
-          class="retry"
-          @click="params.emit"
-        >
-          retry
-        </button>
+        <button class="retry" @click="params.emit">retry</button>
       </span>
     </slot>
   </div>
