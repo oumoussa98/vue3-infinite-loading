@@ -52,6 +52,9 @@ const stateHandler: StateHandler = {
   complete() {
     state.value = "complete";
     observer?.disconnect();
+    const parentEl = params.parentEl || document.documentElement;
+    await nextTick();
+    if (top) parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
   },
   error() {
     state.value = "error";
