@@ -49,7 +49,7 @@ const stateHandler: StateHandler = {
     if (top) parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
     if (isVisible(infiniteLoading.value!, params.parentEl)) params.emit();
   },
-  complete() {
+  async complete() {
     state.value = "complete";
     observer?.disconnect();
     const parentEl = params.parentEl || document.documentElement;
