@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Props, Params, State, StateHandler } from "@root/types";
 import { onMounted, ref, toRefs, onUnmounted, watch, nextTick } from "vue";
-import { startObserver, getParentEl, isVisible } from "@root/utils";
+import { startObserver, getParentEl, isVisible, updateScrollPosition } from "@root/utils";
 // @ts-ignore
 import Spinner from "./Spinner.vue";
 
@@ -44,17 +44,13 @@ const stateHandler: StateHandler = {
   },
   async loaded() {
     state.value = "loaded";
-    const parentEl = params.parentEl || document.documentElement;
-    await nextTick();
-    if (top) parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
+    if (top) updateScrollPosition(params, prevHeight);
     if (isVisible(infiniteLoading.value!, params.parentEl)) params.emit();
   },
   async complete() {
     state.value = "complete";
+    if (top) updateScrollPosition(params, prevHeight);
     observer?.disconnect();
-    const parentEl = params.parentEl || document.documentElement;
-    await nextTick();
-    if (top) parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
   },
   error() {
     state.value = "error";
