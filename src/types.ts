@@ -22,6 +22,7 @@ export interface Params {
 
 export interface Slots {
   complete?: string;
+  noResults?: string;
   error?: string;
 }
 
