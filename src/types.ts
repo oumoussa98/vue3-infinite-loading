@@ -11,15 +11,6 @@ export interface StateHandler {
   error: () => void;
 }
 
-export interface Params {
-  parentEl: Element | null;
-  distance: number;
-  top: boolean;
-  firstload: boolean;
-  infiniteLoading: Ref<HTMLDivElement | null>;
-  emit: () => void;
-}
-
 export interface Slots {
   complete?: string;
   error?: string;

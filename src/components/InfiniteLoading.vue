@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import type { Props, Params, State, StateHandler } from "@root/types";
+import type { Props, State, StateHandler } from "@root/types";
 import { onMounted, ref, toRefs, onUnmounted, watch, nextTick } from "vue";
-import { startObserver, getParentEl, isVisible } from "@root/utils";
+import { getParentEl, isVisible } from "@root/utils";
 // @ts-ignore
 import Spinner from "./Spinner.vue";
 
@@ -21,22 +21,18 @@ let observer: IntersectionObserver | null = null;
 let prevHeight = 0;
 const infiniteLoading = ref(null);
 const state = ref<State>("");
-const { top, firstload, distance } = props;
+const { top, distance } = props;
+let { firstload } = props;
 const { identifier, target } = toRefs(props);
 
-const params: Params = {
-  infiniteLoading,
-  top,
-  firstload,
-  distance,
-  parentEl: null,
-  emit() {
-    const parentEl = params.parentEl || document.documentElement;
-    prevHeight = parentEl.scrollHeight;
-    stateHandler.loading();
-    emit("infinite", stateHandler);
-  },
-};
+let parentEl: HTMLElement | null = null;
+
+function loadMore() {
+  const parent = parentEl || document.documentElement;
+  prevHeight = parent.scrollHeight;
+  stateHandler.loading();
+  emit("infinite", stateHandler);
+}
 
 const stateHandler: StateHandler = {
   loading() {
@@ -44,10 +40,10 @@ const stateHandler: StateHandler = {
   },
   async loaded() {
     state.value = "loaded";
-    const parentEl = params.parentEl || document.documentElement;
+    const parent = parentEl || document.documentElement;
     await nextTick();
-    if (top) parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
-    if (isVisible(infiniteLoading.value!, params.parentEl)) params.emit();
+    if (top) parent.scrollTop = parent.scrollHeight - prevHeight;
+    if (isVisible(infiniteLoading.value!, parentEl)) loadMore();
   },
   complete() {
     state.value = "complete";
@@ -60,17 +56,34 @@ const stateHandler: StateHandler = {
 
 watch(identifier, () => {
   observer?.disconnect();
-  observer = startObserver(params);
+  observer = startObserver();
 });
 
 onMounted(async () => {
-  params.parentEl = await getParentEl(target!);
-  observer = startObserver(params);
+  parentEl = await getParentEl(target!);
+  observer = startObserver();
 });
 
 onUnmounted(() => {
   observer?.disconnect();
 });
+
+function startObserver() {
+  let rootMargin = `0px 0px ${distance}px 0px`;
+  if (top) rootMargin = `${distance}px 0px 0px 0px`;
+  const observer = new IntersectionObserver(
+    entries => {
+      const entry = entries[0];
+      if (entry.isIntersecting) {
+        if (firstload) loadMore();
+        firstload = true;
+      }
+    },
+    { root: parentEl, rootMargin }
+  );
+  observer.observe(infiniteLoading.value!);
+  return observer;
+}
 </script>
 
 <template>
@@ -83,10 +96,10 @@ onUnmounted(() => {
     <slot v-if="state == 'complete'" name="complete">
       <span> {{ slots?.complete || "No more results!" }} </span>
     </slot>
-    <slot v-if="state == 'error'" name="error" :retry="params.emit">
+    <slot v-if="state == 'error'" name="error" :retry="loadMore">
       <span class="state-error">
         <span>{{ slots?.error || "Oops something went wrong!" }}</span>
-        <button class="retry" @click="params.emit">retry</button>
+        <button class="retry" @click="loadMore">retry</button>
       </span>
     </slot>
   </div>

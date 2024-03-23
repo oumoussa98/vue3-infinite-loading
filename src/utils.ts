@@ -15,21 +15,4 @@ async function getParentEl(target: Ref<Target>): Promise<Element | null> {
   return target.value ? document.querySelector(target.value) : null;
 }
 
-function startObserver(params: Params) {
-  let rootMargin = `0px 0px ${params.distance}px 0px`;
-  if (params.top) rootMargin = `${params.distance}px 0px 0px 0px`;
-  const observer = new IntersectionObserver(
-    entries => {
-      const entry = entries[0];
-      if (entry.isIntersecting) {
-        if (params.firstload) params.emit();
-        params.firstload = true;
-      }
-    },
-    { root: params.parentEl, rootMargin }
-  );
-  observer.observe(params.infiniteLoading.value!);
-  return observer;
-}
-
-export { startObserver, isVisible, getParentEl };
+export { isVisible, getParentEl };
