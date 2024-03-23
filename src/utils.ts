@@ -1,6 +1,6 @@
 import { nextTick } from "vue";
 import type { Ref } from "vue";
-import type { Params, Target } from "./types";
+import type { Target } from "./types";
 
 function isVisible(el: Element, view: Element | null): boolean {
   const elRect = el.getBoundingClientRect();

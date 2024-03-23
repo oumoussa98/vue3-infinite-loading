@@ -25,7 +25,7 @@ const { top, distance } = props;
 let { firstload } = props;
 const { identifier, target } = toRefs(props);
 
-let parentEl: HTMLElement | null = null;
+let parentEl: Element | null = null;
 
 function loadMore() {
   const parent = parentEl || document.documentElement;
