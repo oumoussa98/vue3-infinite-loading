@@ -42,3 +42,19 @@
   <button @click="retry">Retry</button>
 </template>
 ```
+
+###
+
+## `loadMore`
+
+- **bind**: `loadMore` function
+- **Details**:
+  Used to create a custom button to load more data when `manualload` is set to `true`
+
+- **example**:
+
+```html
+<template #loadMore="{ load }">
+  <button @click="load">Load more</button>
+</template>
+```

@@ -10,11 +10,14 @@ const props = withDefaults(defineProps<Props>(), {
   top: false,
   firstload: true,
   distance: 0,
+  manualload: false,
 });
+
 defineSlots<{
   spinner(props: {}): any;
   complete(props: {}): any;
   error(props: { retry(): void }): any;
+  loadMore(props: { load(): void }): any;
 }>();
 
 let observer: IntersectionObserver | null = null;
@@ -59,9 +62,22 @@ watch(identifier, () => {
   observer = startObserver();
 });
 
+watch(
+  () => props.manualload,
+  async () => {
+    if (!props.manualload) {
+      await nextTick();
+      // If manual load is disabled, immediately load more if the element is visible
+      if (isVisible(infiniteLoading.value!, parentEl)) loadMore();
+    }
+  }
+);
+
 onMounted(async () => {
   parentEl = await getParentEl(target!);
   observer = startObserver();
+
+  if (props.manualload && firstload) loadMore();
 });
 
 onUnmounted(() => {
@@ -75,6 +91,7 @@ function startObserver() {
     entries => {
       const entry = entries[0];
       if (entry.isIntersecting) {
+        if (props.manualload) return;
         if (firstload) loadMore();
         firstload = true;
       }
@@ -102,6 +119,13 @@ function startObserver() {
         <button class="retry" @click="loadMore">retry</button>
       </span>
     </slot>
+    <slot
+      v-if="props.manualload && (state == 'loaded' || state == '')"
+      name="loadMore"
+      :load="loadMore"
+    >
+      <button class="retry" @click="loadMore">Load More</button>
+    </slot>
   </div>
 </template>
 
@@ -114,7 +138,6 @@ function startObserver() {
 .retry {
   margin-top: 8px;
   padding: 2px 6px 4px 6px;
-  width: 60px;
   color: inherit;
   font-size: 14px;
   font-family: inherit;

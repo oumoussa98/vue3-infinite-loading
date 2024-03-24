@@ -35,6 +35,17 @@
 - **Details**:
   This property is used to specify weither you want the component to handle first load or not.
 
+## manualload
+
+- **Type**: `Boolean`
+- **Default**: `false`
+- **Details**:
+  When true, the component will not load data automatically on scroll. Instead, it will show a button to load more data using the slot `loadMore`.
+
+  This is usefull if you'd like the user to manually click a button to load the first set of data, which prevents the common issue where the user can't scroll to the footer of the page.
+
+  You can change this props at any time to enable or disable manual loading, for example within the load function.
+
 ## slots
 
 - **Type**: `Object`

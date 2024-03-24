@@ -22,5 +22,6 @@ export interface Props {
   distance?: number;
   identifier?: any;
   firstload?: boolean;
+  manualload?: boolean;
   slots?: Slots;
 }

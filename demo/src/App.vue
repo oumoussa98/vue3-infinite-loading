@@ -16,6 +16,7 @@ let distance = ref(0);
 let top = ref(false);
 let comments = ref([]);
 let mountname = ref("Unmount");
+const manualload = ref(false);
 
 const displayMultipleLoader = () => {
   showLoaders.value = !showLoaders.value;
@@ -96,6 +97,9 @@ const load = async $state => {
       <Checkbox :checked="top" :disabled="!target" label="top" @click="topToggler">
         Top
       </Checkbox>
+      <Checkbox :checked="manualload" label="manual" @click="manualload = !manualload">
+        Manual Load
+      </Checkbox>
       <Checkbox :checked="target" label="target" @click="targetToggler">
         Target
       </Checkbox>
@@ -121,6 +125,7 @@ const load = async $state => {
       :distance="distance"
       :comments="comments"
       :identifier="resetData"
+      :manualload="manualload"
       :target="target"
       @infinite="load"
     />
@@ -129,6 +134,7 @@ const load = async $state => {
       :distance="distance"
       :comments="comments"
       :identifier="resetData"
+      :manualload="manualload"
       :target="target"
       @infinite="load"
     />
