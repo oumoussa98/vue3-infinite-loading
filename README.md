@@ -27,7 +27,7 @@ register globally:
 
 ```JavaScript
 import InfiniteLoading from "v3-infinite-loading";
-import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
+import "v3-infinite-loading/lib/style.css"; // required if you're not going to override default slots
 
 const app = createApp(App);
 
@@ -41,7 +41,7 @@ usage in SFC with script setup:
 ```html
 <script setup>
   import InfiniteLoading from "v3-infinite-loading";
-  import "v3-infinite-loading/lib/style.css"; //required if you're not going to override default slots
+  import "v3-infinite-loading/lib/style.css"; // required if you're not going to override default slots
 </script>
 
 <template>
@@ -54,11 +54,11 @@ usage in SFC with script setup:
 ```html
 <html>
   <head>
-    <script src="https://unpkg.com/vue@3.2.37/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/v3-infinite-loading@1.2.1/lib/v3-infinite-loading.umd.js"></script>
+    <script src="https://unpkg.com/vue@3.4.38/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/v3-infinite-loading@1.3.2/lib/v3-infinite-loading.umd.js"></script>
     <link
       rel="stylesheet"
-      href="https://unpkg.com/v3-infinite-loading@1.2.1/lib/style.css"
+      href="https://unpkg.com/v3-infinite-loading@1.3.2/lib/style.css"
     />
   </head>
   <body>
@@ -81,9 +81,9 @@ usage in SFC with script setup:
 
 ## Usage & Guide
 
-Documentation available on [v3-infinite-loading Netlify](https://vue3-infinite-loading.netlify.com/)
+Documentation available on [v3-infinite-loading Netlify](https://vue3-infinite-loading.netlify.app/)
 
-Check out live demo [v3-infinite-loading-demo Netlify](https://vue3-infinite-loading-demo.netlify.com/)
+Check out live demo [v3-infinite-loading-demo Netlify](https://vue3-infinite-loading-demo.netlify.app/)
 
 ## Changelog
 
