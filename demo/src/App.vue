@@ -65,7 +65,7 @@ const distanceHandler = async () => {
   refresh();
 };
 
-const limit = 200;
+const limit = 5;
 const load = async $state => {
   console.log("loading more...");
   try {
