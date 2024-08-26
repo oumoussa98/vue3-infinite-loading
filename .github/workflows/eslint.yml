@@ -22,7 +22,7 @@ jobs:
           node-version: "20"
 
       - name: Install Dependencies
-        run: npm install -g pnpm && pnpm install
+        run: npm install -g pnpm && pnpm i --frozen-lockfile
 
       - name: Run ESLint
         run: pnpm run lint
