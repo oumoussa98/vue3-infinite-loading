@@ -38,6 +38,11 @@ const params: Params = {
   },
 };
 
+const resetObserver = () => {
+  observer?.disconnect();
+  observer = startObserver(params);
+};
+
 const stateHandler: StateHandler = {
   loading() {
     state.value = "loading";
@@ -58,13 +63,12 @@ const stateHandler: StateHandler = {
 };
 
 watch(identifier, () => {
-  observer?.disconnect();
-  observer = startObserver(params);
+  resetObserver();
 });
 
 onMounted(async () => {
   params.parentEl = await getParentEl(target!);
-  observer = startObserver(params);
+  resetObserver();
 });
 
 onUnmounted(() => {
