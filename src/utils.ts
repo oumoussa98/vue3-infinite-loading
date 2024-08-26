@@ -32,4 +32,10 @@ function startObserver(params: Params) {
   return observer;
 }
 
-export { startObserver, isVisible, getParentEl };
+async function updateScrollPosition(params: Params, prevHeight: number) {
+  const parentEl = params.parentEl || document.documentElement;
+  await nextTick();
+  parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
+}
+
+export { startObserver, isVisible, getParentEl, updateScrollPosition };
