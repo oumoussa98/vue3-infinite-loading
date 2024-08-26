@@ -64,20 +64,22 @@ const distanceHandler = async () => {
   mountToggler();
   refresh();
 };
+
+const limit = 200;
 const load = async $state => {
   console.log("loading more...");
-  page++;
   try {
     const response = await fetch(
-      "https://jsonplaceholder.typicode.com/comments?_limit=5&_page=" + page
+      `https://jsonplaceholder.typicode.com/comments?_limit=${limit}&_page=${++page}`
     );
     const json = await response.json();
-    if (json.length < 5) $state.complete();
-    else {
+    if (json.length) {
       if (!top.value) comments.value.push(...json);
-      else comments.value.unshift(...json);
+      else comments.value.unshift(...json.reverse());
       $state.loaded();
     }
+
+    if (json.length < limit) $state.complete();
   } catch (error) {
     $state.error();
   }

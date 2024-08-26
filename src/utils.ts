@@ -2,14 +2,25 @@ import { nextTick } from "vue";
 import type { Ref } from "vue";
 import type { Params, Target } from "./types";
 
-function isVisible(el: Element, view: Element | null): boolean {
+function isVisible(el: Element, view: Element | null = null): boolean {
+  if (!el) return false;
+
   const elRect = el.getBoundingClientRect();
-  if (!view) return elRect.top >= 0 && elRect.bottom <= window.innerHeight;
-  const viewRect = view.getBoundingClientRect();
-  return elRect.top >= viewRect.top && elRect.bottom <= viewRect.bottom;
+  const viewRect = view
+    ? view.getBoundingClientRect()
+    : { top: 0, left: 0, bottom: window.innerHeight, right: window.innerWidth };
+
+  return (
+    elRect.bottom >= viewRect.top &&
+    elRect.top <= viewRect.bottom &&
+    elRect.right >= viewRect.left &&
+    elRect.left <= viewRect.right
+  );
 }
 
-async function getParentEl(target: Ref<Target>): Promise<Element | null> {
+async function getParentEl(target?: Ref<Target | undefined>): Promise<Element | null> {
+  if (!target) return null;
+
   await nextTick();
   if (target.value instanceof HTMLElement) return target.value;
   return target.value ? document.querySelector(target.value) : null;
@@ -28,13 +39,14 @@ function startObserver(params: Params) {
     },
     { root: params.parentEl, rootMargin }
   );
-  observer.observe(params.infiniteLoading.value!);
+  if (params.infiniteLoading.value) observer.observe(params.infiniteLoading.value);
   return observer;
 }
 
 async function updateScrollPosition(params: Params, prevHeight: number) {
-  const parentEl = params.parentEl || document.documentElement;
   await nextTick();
+  if (!params.top) return;
+  const parentEl = params.parentEl || document.documentElement;
   parentEl.scrollTop = parentEl.scrollHeight - prevHeight;
 }
 

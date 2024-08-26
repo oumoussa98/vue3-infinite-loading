@@ -1,16 +1,18 @@
 <script lang="ts" setup>
 import type { Props, Params, State, StateHandler } from "@root/types";
-import { onMounted, ref, toRefs, onUnmounted, watch, nextTick } from "vue";
+import { onMounted, ref, toRefs, onUnmounted, watch } from "vue";
 import { startObserver, getParentEl, isVisible, updateScrollPosition } from "@root/utils";
 // @ts-ignore
 import Spinner from "./Spinner.vue";
 
 const emit = defineEmits<{ infinite: [$state: StateHandler] }>();
+
 const props = withDefaults(defineProps<Props>(), {
   top: false,
   firstload: true,
   distance: 0,
 });
+
 defineSlots<{
   spinner(props: {}): any;
   complete(props: {}): any;
@@ -19,6 +21,7 @@ defineSlots<{
 
 let observer: IntersectionObserver | null = null;
 let prevHeight = 0;
+
 const infiniteLoading = ref(null);
 const state = ref<State>("");
 const { top, firstload, distance } = props;
@@ -38,23 +41,18 @@ const params: Params = {
   },
 };
 
-const resetObserver = () => {
-  observer?.disconnect();
-  observer = startObserver(params);
-};
-
 const stateHandler: StateHandler = {
   loading() {
     state.value = "loading";
   },
   async loaded() {
     state.value = "loaded";
-    if (top) updateScrollPosition(params, prevHeight);
+    await updateScrollPosition(params, prevHeight);
     if (isVisible(infiniteLoading.value!, params.parentEl)) params.emit();
   },
   async complete() {
     state.value = "complete";
-    if (top) updateScrollPosition(params, prevHeight);
+    await updateScrollPosition(params, prevHeight);
     observer?.disconnect();
   },
   error() {
@@ -62,22 +60,23 @@ const stateHandler: StateHandler = {
   },
 };
 
-watch(identifier, () => {
-  resetObserver();
-});
+function resetObserver() {
+  observer?.disconnect();
+  observer = startObserver(params);
+}
+
+watch(identifier, resetObserver);
 
 onMounted(async () => {
-  params.parentEl = await getParentEl(target!);
+  params.parentEl = await getParentEl(target);
   resetObserver();
 });
 
-onUnmounted(() => {
-  observer?.disconnect();
-});
+onUnmounted(() => observer?.disconnect());
 </script>
 
 <template>
-  <div ref="infiniteLoading" style="min-height: 1px">
+  <div ref="infiniteLoading" class="v3-infinite-loading">
     <div v-show="state == 'loading'">
       <slot name="spinner">
         <Spinner />
@@ -96,11 +95,17 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+.v3-infinite-loading {
+  width: 100%;
+  height: 44px;
+}
+
 .state-error {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .retry {
   margin-top: 8px;
   padding: 2px 6px 4px 6px;
@@ -114,6 +119,7 @@ onUnmounted(() => {
   outline: none;
   cursor: pointer;
 }
+
 .retry:hover {
   opacity: 0.8;
 }

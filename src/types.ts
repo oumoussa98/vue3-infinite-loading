@@ -1,6 +1,6 @@
 import type { Ref } from "vue";
 
-export type Target = HTMLElement | string | null | undefined;
+export type Target = HTMLElement | string;
 
 export type State = "" | "loading" | "loaded" | "complete" | "error";
 
