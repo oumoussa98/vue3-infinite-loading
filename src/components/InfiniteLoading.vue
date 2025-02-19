@@ -43,13 +43,12 @@ const stateHandler: StateHandler = {
   },
   async loaded() {
     state.value = "loaded";
-    const parent = parentEl || document.documentElement;
-    await nextTick();
-    if (top) parent.scrollTop = parent.scrollHeight - prevHeight;
+    await updateScrollPosition();
     if (isVisible(infiniteLoading.value!, parentEl)) loadMore();
   },
-  complete() {
+  async complete() {
     state.value = "complete";
+    await updateScrollPosition();
     observer?.disconnect();
   },
   error() {
@@ -100,6 +99,13 @@ function startObserver() {
   );
   observer.observe(infiniteLoading.value!);
   return observer;
+}
+
+async function updateScrollPosition() {
+  await nextTick();
+  if (!top) return;
+  const parent = parentEl || document.documentElement;
+  parent.scrollTop = parent.scrollHeight - prevHeight;
 }
 </script>
 
