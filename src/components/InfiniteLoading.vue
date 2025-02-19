@@ -2,7 +2,7 @@
 import type { Props, State, StateHandler } from "@root/types";
 import { onMounted, ref, toRefs, onUnmounted, watch, nextTick } from "vue";
 import { getParentEl, isVisible } from "@root/utils";
-// @ts-ignore
+
 import Spinner from "./Spinner.vue";
 
 const emit = defineEmits<{ infinite: [$state: StateHandler] }>();
@@ -56,10 +56,7 @@ const stateHandler: StateHandler = {
   },
 };
 
-watch(identifier, () => {
-  observer?.disconnect();
-  observer = startObserver();
-});
+watch(identifier, resetObserver);
 
 watch(
   () => props.manualload,
@@ -74,7 +71,7 @@ watch(
 
 onMounted(async () => {
   parentEl = await getParentEl(target!);
-  observer = startObserver();
+  resetObserver();
 
   if (props.manualload && firstload) loadMore();
 });
@@ -99,6 +96,11 @@ function startObserver() {
   );
   observer.observe(infiniteLoading.value!);
   return observer;
+}
+
+function resetObserver() {
+  observer?.disconnect();
+  observer = startObserver();
 }
 
 async function updateScrollPosition() {
